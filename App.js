@@ -1,3 +1,4 @@
+import 'react-native-url-polyfill/auto';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Root from './src/root';
