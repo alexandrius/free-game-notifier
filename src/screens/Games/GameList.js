@@ -1,11 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
+import ScreenWrapper from 'components/ScreenWrapper';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { getGames } from 'services/supabase';
-import Colors from 'styles/colors';
 
-import GameItem, { ITEM_HEIGHT } from './Game';
+import GameItem, { ITEM_HEIGHT } from './GameItem';
 
 export default function GameList() {
   const [games, setGames] = useState();
@@ -17,19 +15,12 @@ export default function GameList() {
   }, []);
 
   return (
-    <View style={styles.root}>
+    <ScreenWrapper title='100% Discount'>
       <FlashList
         data={games}
         renderItem={({ item }) => <GameItem {...item} />}
         estimatedItemSize={ITEM_HEIGHT}
       />
-    </View>
+    </ScreenWrapper>
   );
 }
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: getStatusBarHeight() + 10,
-  },
-});
