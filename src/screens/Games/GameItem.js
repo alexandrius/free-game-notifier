@@ -1,6 +1,7 @@
 import Text from 'components/Text';
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
+import { Touchable } from 'react-native-better-touchable';
 import Colors from 'styles/colors';
 
 export const ITEM_HEIGHT = 300;
@@ -33,11 +34,16 @@ const styles = StyleSheet.create({
 
 export default function Game({ title, photo }) {
   return (
-    <View style={styles.container}>
+    <Touchable
+      style={styles.container}
+      rippleColor='#4A13CC'
+      onPress={() => {
+        // alert('Pressed');
+      }}>
       <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
       </View>
-    </View>
+    </Touchable>
   );
 }
