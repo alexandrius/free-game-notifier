@@ -30,9 +30,32 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 15,
   },
+  priceContainer: {
+    position: 'absolute',
+    right: 0,
+    top: 36,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    backgroundColor: Colors.background,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  price: {
+    fontSize: 18,
+    lineHeight: 28,
+    color: Colors.accent,
+    fontWeight: '600',
+  },
+  line: {
+    height: 2,
+    backgroundColor: Colors.accent,
+    position: 'absolute',
+    width: '100%',
+    top: '49%',
+  },
 });
 
-export default function Game({ title, photo }) {
+export default function Game({ title, photo, original_price }) {
   return (
     <Touchable
       style={styles.container}
@@ -43,6 +66,13 @@ export default function Game({ title, photo }) {
       <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
+      </View>
+
+      <View style={styles.priceContainer}>
+        <View>
+          <Text style={styles.price}>${original_price.toFixed(2)}</Text>
+          <View style={styles.line} />
+        </View>
       </View>
     </Touchable>
   );

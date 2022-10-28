@@ -23,7 +23,7 @@ export default function GameList() {
         estimatedItemSize={ITEM_HEIGHT}
       />
 
-      <FloatingSwitcher options={[{ title: 'Steam' }]} selected={0} />
+      <FloatingSwitcher options={[{ title: 'All' }, { title: 'Steam' }]} />
     </ScreenWrapper>
   );
 }

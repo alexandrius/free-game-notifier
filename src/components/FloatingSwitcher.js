@@ -5,7 +5,7 @@ import { Touchable } from 'react-native-better-touchable';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import Colors from 'styles/colors';
 
-export default function FloatingSwitcher({ selected, options }) {
+export default function FloatingSwitcher({ selected = 0, options }) {
   return (
     <View style={styles.container}>
       <Touchable rippleColor={Colors.item} style={styles.touchable}>
@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     marginRight: 17,
+    lineHeight: 24,
   },
 });
