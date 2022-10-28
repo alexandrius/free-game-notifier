@@ -1,4 +1,5 @@
 import Text from 'components/Text';
+import dayjs from 'dayjs';
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Touchable } from 'react-native-better-touchable';
@@ -9,12 +10,12 @@ export const ITEM_HEIGHT = 300;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.item,
-    height: ITEM_HEIGHT,
     marginHorizontal: 20,
     borderRadius: 12,
     marginBottom: 12,
     paddingHorizontal: 10,
     paddingTop: 10,
+    paddingBottom: 16,
   },
   image: {
     borderRadius: 12,
@@ -23,6 +24,10 @@ const styles = StyleSheet.create({
   },
   content: {
     marginHorizontal: 6,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     color: 'white',
@@ -55,7 +60,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Game({ title, photo, original_price }) {
+export default function Game({ title, photo, original_price, until_date }) {
+  const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
+
   return (
     <Touchable
       style={styles.container}
@@ -65,7 +72,15 @@ export default function Game({ title, photo, original_price }) {
       }}>
       <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={[styles.rowContainer, { marginBottom: 12 }]}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <View style={styles.rowContainer}>
+          <View></View>
+          <Text style={{ color: daysLeft > 3 ? Colors.green : Colors.red }}>
+            {daysLeft} days left
+          </Text>
+        </View>
       </View>
 
       <View style={styles.priceContainer}>
