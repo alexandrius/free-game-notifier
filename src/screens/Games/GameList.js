@@ -1,4 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
+import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import React, { useEffect, useState } from 'react';
 import { getGames } from 'services/supabase';
@@ -21,6 +22,8 @@ export default function GameList() {
         renderItem={({ item }) => <GameItem {...item} />}
         estimatedItemSize={ITEM_HEIGHT}
       />
+
+      <FloatingSwitcher options={[{ title: 'Steam' }]} selected={0} />
     </ScreenWrapper>
   );
 }

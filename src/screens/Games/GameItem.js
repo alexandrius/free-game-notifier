@@ -36,7 +36,7 @@ export default function Game({ title, photo }) {
   return (
     <Touchable
       style={styles.container}
-      rippleColor='#4A13CC'
+      rippleColor={Colors.accent}
       onPress={() => {
         // alert('Pressed');
       }}>
