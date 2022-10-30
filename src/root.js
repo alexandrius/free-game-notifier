@@ -10,6 +10,13 @@ const StackNavigatorConfig = ({ route }) => {
   return {
     headerShown: false,
     gestureEnabled: false,
+    cardStyleInterpolator: ({ current: { progress } }) => {
+      return {
+        cardStyle: {
+          opacity: progress,
+        },
+      };
+    },
   };
 };
 
