@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto';
 import * as FileSystem from 'expo-file-system';
 import React, { Component } from 'react';
-import { Image, ImageBackground, InteractionManager } from 'react-native';
+import { Image, InteractionManager } from 'react-native';
 
 export default class CachedImage extends Component {
   mounted = true;
@@ -110,14 +110,7 @@ export default class CachedImage extends Component {
     if (!source && this.props.source) {
       source = { ...this.props.source, cache: 'force-cache' };
     }
-    if (this.props.isBackground) {
-      return (
-        <ImageBackground {...this.props} source={source}>
-          {this.props.children}
-        </ImageBackground>
-      );
-    } else {
-      return <Image {...this.props} source={source} />;
-    }
+
+    return <Image {...this.props} source={source} />;
   }
 }
