@@ -1,6 +1,5 @@
-import CachedImage from 'components/CachedImage';
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import Colors from 'styles/colors';
 
@@ -10,7 +9,7 @@ export default function Details({ route, navigation }) {
   return (
     <View style={styles.root}>
       <SharedElement id={`${game.id}.photo`}>
-        <CachedImage style={styles.image} source={{ uri: game.photo }} resizeMode='cover' />
+        <Image style={styles.image} source={{ uri: game.photo }} resizeMode='cover' />
       </SharedElement>
 
       <TouchableOpacity
