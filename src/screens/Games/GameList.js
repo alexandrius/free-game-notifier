@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
 
 export default function GameList() {
   const [games, setGames] = useState();
+  const [selectedStore, setSelectedStore] = useState(0);
 
   useEffect(() => {
     getGames().then(({ data }) => {
@@ -33,7 +34,17 @@ export default function GameList() {
         contentContainerStyle={styles.contentContainerStyle}
       />
 
-      <FloatingSwitcher options={[{ title: 'All' }, { title: 'Steam' }]} />
+      <FloatingSwitcher
+        selected={selectedStore}
+        onSelect={(selected) => setSelectedStore(selected)}
+        options={[
+          { title: 'All' },
+          { title: 'Steam' },
+          { title: 'Epic Games Launcher' },
+          { title: 'Xbox Store' },
+          { title: 'Nintendo eShop' },
+        ]}
+      />
     </ScreenWrapper>
   );
 }
