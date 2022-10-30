@@ -1,8 +1,8 @@
 import { Entypo } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
 import Animated, { FadeIn, Layout } from 'react-native-reanimated';
+import { getBottomSpace } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 
 function Option({ title, onPress, chevronVisible, selected }) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { getStatusBarHeight } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 
 import Text from './Text';

@@ -3,7 +3,7 @@ import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
+import { getBottomSpace } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
 
 import GameItem, { ITEM_HEIGHT } from './GameItem';
