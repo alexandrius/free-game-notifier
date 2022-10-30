@@ -10,13 +10,7 @@ export default function Details({ route, navigation }) {
   return (
     <View style={styles.root}>
       <SharedElement id={`${game.id}.photo`}>
-        <CachedImage
-          style={styles.image}
-          source={{ uri: game.photo }}
-          onLoad={() => {
-            console.log('onLoad');
-          }}
-        />
+        <CachedImage style={styles.image} source={{ uri: game.photo }} resizeMode='cover' />
       </SharedElement>
 
       <TouchableOpacity
