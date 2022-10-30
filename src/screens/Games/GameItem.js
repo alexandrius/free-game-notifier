@@ -3,6 +3,7 @@ import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
+import { SharedElement } from 'react-navigation-shared-element';
 import Colors from 'styles/colors';
 
 export const ITEM_HEIGHT = 300;
@@ -60,17 +61,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Game({ title, photo, original_price, until_date }) {
+export default function Game({ id, title, photo, original_price, until_date, onPress }) {
   const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
 
   return (
-    <Touchable
-      style={styles.container}
-      rippleColor={Colors.accent}
-      onPress={() => {
-        // alert('Pressed');
-      }}>
-      <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
+    <Touchable style={styles.container} rippleColor={Colors.accent} onPress={onPress}>
+      <SharedElement id={`${id}.photo`}>
+        <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
+      </SharedElement>
       <View style={styles.content}>
         <View style={[styles.rowContainer, { marginBottom: 12 }]}>
           <Text style={styles.title}>{title}</Text>

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GameList() {
+export default function GameList({ navigation }) {
   const [games, setGames] = useState();
   const [selectedStore, setSelectedStore] = useState(0);
 
@@ -29,7 +29,9 @@ export default function GameList() {
     <ScreenWrapper title='100% Discount'>
       <FlashList
         data={games}
-        renderItem={({ item }) => <GameItem {...item} />}
+        renderItem={({ item }) => (
+          <GameItem {...item} onPress={() => navigation.navigate('Details', { game: item })} />
+        )}
         estimatedItemSize={ITEM_HEIGHT}
         contentContainerStyle={styles.contentContainerStyle}
       />

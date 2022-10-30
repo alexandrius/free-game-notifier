@@ -1,26 +1,30 @@
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import React from 'react';
-import { Platform } from 'react-native';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 import Details from './screens/Games/Details';
 import GameList from './screens/Games/GameList';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const StackNavigatorConfig = ({ route }) => {
   return {
-    ...TransitionPresets.SlideFromRightIOS,
     headerShown: false,
-    cardStyle: { backgroundColor: 'white' },
-    gestureEnabled: Platform.select({ ios: route.params?.gestureEnabled, default: false }),
+    gestureEnabled: false,
   };
 };
 
 export default function Root() {
   return (
-    <Stack.Navigator screenOptions={StackNavigatorConfig}>
+    <Stack.Navigator detachInactiveScreens={false} screenOptions={StackNavigatorConfig}>
       <Stack.Screen name='GameList' component={GameList} />
-      <Stack.Screen name='Details' component={Details} />
+      <Stack.Screen
+        name='Details'
+        component={Details}
+        sharedElements={(route, otherRoute, showing) => {
+          const { game } = route.params;
+          return [`${game.id}.photo`];
+        }}
+      />
     </Stack.Navigator>
   );
 }
