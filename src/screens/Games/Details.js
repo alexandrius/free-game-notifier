@@ -1,5 +1,6 @@
+import CachedImage from 'components/CachedImage';
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import Colors from 'styles/colors';
 
@@ -9,7 +10,7 @@ export default function Details({ route, navigation }) {
   return (
     <View style={styles.root}>
       <SharedElement id={`${game.id}.photo`}>
-        <Image
+        <CachedImage
           style={styles.image}
           source={{ uri: game.photo }}
           onLoad={() => {
@@ -19,14 +20,17 @@ export default function Details({ route, navigation }) {
       </SharedElement>
 
       <TouchableOpacity
+        activeOpacity={1}
         style={{
-          width: 100,
-          height: 100,
+          top: 50,
+          right: 20,
+          width: 50,
+          height: 50,
           position: 'absolute',
           backgroundColor: 'red',
-          zIndex: 100,
         }}
-        onPress={() => navigation.goBack()}></TouchableOpacity>
+        onPress={() => navigation.goBack()}
+      />
     </View>
   );
 }
