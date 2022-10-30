@@ -6346,10 +6346,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-better-touchable@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/react-native-better-touchable/-/react-native-better-touchable-0.0.8.tgz#6941a4988408a080480f21100e1be11b1cc7b197"
-  integrity sha512-IXBGfWcCv61nbCy2tFXK78J9QRcvS1mwmTHcpcSPcph63stWg1zjz8OuItzdUydbgJ7djFPII6eKO7SZFlnyKw==
+react-native-better-touchable@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-better-touchable/-/react-native-better-touchable-0.0.9.tgz#515f7370dad90a1a386fd9ffd7faf22870c41b22"
+  integrity sha512-iqvBHIOjLyfdZWxGFigOcNnYVJfQ3GunVQqkyaWsWgVRShWm4EkV3dQUO31kzPI2BTkzVXvwD741dZAxOGMm+Q==
 
 react-native-codegen@^0.69.2:
   version "0.69.2"

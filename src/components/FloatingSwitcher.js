@@ -1,9 +1,10 @@
 import { Entypo } from '@expo/vector-icons';
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Touchable } from 'react-native-better-touchable';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import Colors from 'styles/colors';
+
+import { Touchable } from './Touchable';
 
 export default function FloatingSwitcher({ selected = 0, options }) {
   return (

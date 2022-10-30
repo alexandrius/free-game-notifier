@@ -1,8 +1,8 @@
 import Text from 'components/Text';
+import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Touchable } from 'react-native-better-touchable';
 import Colors from 'styles/colors';
 
 export const ITEM_HEIGHT = 300;
