@@ -1,7 +1,7 @@
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Colors from 'styles/colors';
 
@@ -104,10 +104,15 @@ export default function Game({
   developer,
   onPress,
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
 
   return (
-    <Touchable style={styles.container} rippleColor={Colors.accent} onPress={onPress}>
+    <Touchable
+      style={styles.container}
+      rippleColor={Colors.accent}
+      onPress={() => setExpanded(!expanded)}>
       <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
 
       <View style={styles.priceContainer}>
@@ -121,19 +126,23 @@ export default function Game({
           <Text style={styles.title}>{title}</Text>
         </View>
         <View style={styles.rowContainer}>
-          <View></View>
+          <View>{/* Add store here */}</View>
           <Text style={{ color: daysLeft > 3 ? Colors.safe : Colors.unsafe }}>
             {daysLeft} days left
           </Text>
         </View>
 
         {/* Everything below will be hidden */}
-        <Text style={styles.sectionTitle}>Description</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.sectionTitle}>Additional Info</Text>
-        <InfoItem label='Release Date' value={release_date} />
-        <InfoItem label='Developer' value={developer} />
-        <InfoItem label='Platforms' value='Windows' />
+        {expanded && (
+          <>
+            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.sectionTitle}>Additional Info</Text>
+            <InfoItem label='Release Date' value={release_date} />
+            <InfoItem label='Developer' value={developer} />
+            <InfoItem label='Platforms' value='Windows' />
+          </>
+        )}
       </View>
     </Touchable>
   );
