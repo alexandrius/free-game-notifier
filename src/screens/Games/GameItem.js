@@ -1,10 +1,8 @@
-import Image from 'components/Image';
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { SharedElement } from 'react-navigation-shared-element';
+import { View, Image, StyleSheet } from 'react-native';
 import Colors from 'styles/colors';
 
 export const ITEM_HEIGHT = 300;
@@ -67,9 +65,7 @@ export default function Game({ id, title, photo, original_price, until_date, onP
 
   return (
     <Touchable style={styles.container} rippleColor={Colors.accent} onPress={onPress}>
-      <SharedElement id={`${id}.photo`}>
-        <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
-      </SharedElement>
+      <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
       <View style={styles.content}>
         <View style={[styles.rowContainer, { marginBottom: 12 }]}>
           <Text style={styles.title}>{title}</Text>

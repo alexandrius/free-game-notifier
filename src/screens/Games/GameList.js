@@ -29,9 +29,7 @@ export default function GameList({ navigation }) {
     <ScreenWrapper title='100% Discount'>
       <FlashList
         data={games}
-        renderItem={({ item }) => (
-          <GameItem {...item} onPress={() => navigation.navigate('Details', { game: item })} />
-        )}
+        renderItem={({ item }) => <GameItem {...item} onPress={() => {}} />}
         estimatedItemSize={ITEM_HEIGHT}
         contentContainerStyle={styles.contentContainerStyle}
       />

@@ -1,7 +1,5 @@
-import Image from 'components/Image';
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { SharedElement } from 'react-navigation-shared-element';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Colors from 'styles/colors';
 
 export default function Details({ route, navigation }) {
@@ -9,9 +7,7 @@ export default function Details({ route, navigation }) {
 
   return (
     <View style={styles.root}>
-      <SharedElement id={`${game.id}.photo`}>
-        <Image style={styles.image} source={{ uri: game.photo }} resizeMode='cover' />
-      </SharedElement>
+      <Image style={styles.image} source={{ uri: game.photo }} resizeMode='cover' />
 
       <TouchableOpacity
         activeOpacity={1}
