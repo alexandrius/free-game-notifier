@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { getBottomSpace } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
 
-import GameItem, { ITEM_HEIGHT } from './Item/GameItem';
+import GameItem, { ITEM_HEIGHT } from './Item';
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
