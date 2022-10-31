@@ -1,5 +1,6 @@
+import Image from 'components/Image';
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import Colors from 'styles/colors';
 

@@ -1,8 +1,9 @@
+import Image from 'components/Image';
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import Colors from 'styles/colors';
 
