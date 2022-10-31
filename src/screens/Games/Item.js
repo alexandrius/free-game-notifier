@@ -66,13 +66,31 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   description: {
-    color: Colors.description,
+    color: Colors.text_description,
     lineHeight: 20,
+  },
+  infoItem: {
+    marginBottom: 20,
+  },
+  infoLabel: {
+    color: Colors.infoTitle,
+    fontSize: 12,
+    lineHeight: 16,
+    marginBottom: 4,
+  },
+  infoValue: {
+    lineHeight: 20,
+    color: Colors.infoValue,
   },
 });
 
-function InfoItem({ label, value }) {
-  return <View></View>;
+function InfoItem({ label, value, renderValue }) {
+  return (
+    <View style={styles.infoItem}>
+      <Text style={styles.infoLabel}>{label}</Text>
+      {renderValue?.() || <Text style={styles.infoValue}>{value}</Text>}
+    </View>
+  );
 }
 
 export default function Game({
@@ -81,7 +99,9 @@ export default function Game({
   photo,
   original_price,
   until_date,
+  release_date,
   description,
+  developer,
   onPress,
 }) {
   const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
@@ -111,6 +131,9 @@ export default function Game({
         <Text style={styles.sectionTitle}>Description</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.sectionTitle}>Additional Info</Text>
+        <InfoItem label='Release Date' value={release_date} />
+        <InfoItem label='Developer' value={developer} />
+        <InfoItem label='Platforms' value='Windows' />
       </View>
     </Touchable>
   );

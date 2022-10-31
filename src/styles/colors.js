@@ -4,5 +4,7 @@ export default {
   accent: '#FF6D32',
   safe: '#3BF585',
   unsafe: '#FF4D4D',
-  description: '#C4CBD5',
+  text_description: '#C4CBD5',
+  infoTitle: '#919AAB',
+  infoValue: '#FFFFFF',
 };
