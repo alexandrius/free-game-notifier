@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
 export default function GameList({ navigation }) {
   const [games, setGames] = useState();
   const [selectedStore, setSelectedStore] = useState(0);
+  const [expanded, setExpanded] = useState(0);
 
   useEffect(() => {
     getGames().then(({ data }) => {
@@ -28,7 +29,15 @@ export default function GameList({ navigation }) {
     <ScreenWrapper title='100% Discount'>
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>
         {games?.map((game, index) => (
-          <GameItem key={game.id.toString()} {...game} />
+          <GameItem
+            {...game}
+            key={game.id.toString()}
+            expanded={index === expanded}
+            onPress={() => {
+              if (expanded === index) setExpanded();
+              else setExpanded(index);
+            }}
+          />
         ))}
       </ScrollView>
 

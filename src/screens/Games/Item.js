@@ -1,7 +1,7 @@
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Colors from 'styles/colors';
 
@@ -101,16 +101,12 @@ export default function Game({
   description,
   developer,
   onPress,
+  expanded,
 }) {
-  const [expanded, setExpanded] = useState(false);
-
   const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
 
   return (
-    <Touchable
-      style={styles.container}
-      rippleColor={Colors.accent}
-      onPress={() => setExpanded(!expanded)}>
+    <Touchable style={styles.container} rippleColor={Colors.accent} onPress={onPress}>
       <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
 
       <View style={styles.priceContainer}>
