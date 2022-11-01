@@ -5,8 +5,6 @@ import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Colors from 'styles/colors';
 
-export const ITEM_HEIGHT = 300;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.itemBackground,
@@ -20,7 +18,7 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 12,
     width: '100%',
-    height: ITEM_HEIGHT - 100,
+    height: 210,
   },
   content: {
     marginHorizontal: 6,

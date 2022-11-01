@@ -1,12 +1,11 @@
-import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { getBottomSpace } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
 
-import GameItem, { ITEM_HEIGHT } from './Item';
+import GameItem from './Item';
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -27,12 +26,11 @@ export default function GameList({ navigation }) {
 
   return (
     <ScreenWrapper title='100% Discount'>
-      <FlashList
-        data={games}
-        renderItem={({ item }) => <GameItem {...item} onPress={() => {}} />}
-        estimatedItemSize={ITEM_HEIGHT}
-        contentContainerStyle={styles.contentContainerStyle}
-      />
+      <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+        {games?.map((game, index) => (
+          <GameItem key={game.id.toString()} {...game} />
+        ))}
+      </ScrollView>
 
       <FloatingSwitcher
         selected={selectedStore}
