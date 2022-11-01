@@ -1,7 +1,7 @@
 import Text from 'components/Text';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Animated, {
   interpolate,
   measure,
@@ -16,6 +16,8 @@ import { getStatusBarHeight } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 import useEffectAfter from 'utils/hooks/useEffectAfter';
 
+const { width, height } = Dimensions.get('screen');
+
 const styles = StyleSheet.create({
   container: {
     marginBottom: 12,
@@ -27,8 +29,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 16,
-    borderRadius: 12,
     backgroundColor: Colors.itemBackground,
+    borderRadius: 12,
   },
   image: {
     borderRadius: 12,
@@ -102,6 +104,15 @@ const styles = StyleSheet.create({
     top: 20,
     backgroundColor: 'red',
   },
+  backgroundNode: {
+    backgroundColor: Colors.itemBackground,
+    position: 'absolute',
+    height,
+    width,
+  },
+  additionalInfo: {
+    marginHorizontal: 24,
+  },
 });
 
 const statusBarHeight = getStatusBarHeight() + 10;
@@ -171,70 +182,79 @@ export default function Game({
   const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
 
   return (
-    <Animated.View
-      ref={itemRef}
-      style={[styles.container, { zIndex: expanded ? 2 : 1 }, rootAnimatedStyle]}
-      onLayout={({
-        nativeEvent: {
-          layout: { height },
-        },
-      }) => {
-        if (!collapsedHeight.value && height) {
-          collapsedHeight.value = height;
-        }
-      }}>
-      {expanded && <View style={{ height: collapsedHeight.value }} />}
-
+    <>
+      {expanded && (
+        <Animated.View
+          style={[styles.backgroundNode, { zIndex: expanded ? 2 : 1 }, opacityAnimationStyle]}
+        />
+      )}
       <Animated.View
-        style={[
-          styles.touchableContainer,
-          { position: expanded ? 'absolute' : 'relative' },
-          touchableContainerAnimatedStyle,
-        ]}>
-        <Animated.View style={headerPlaceholderStyle} />
-        <TouchableOpacity
-          style={styles.touchable}
-          activeOpacity={0.9}
-          disabled={expanded}
-          onPress={() => {
-            if (collapsedHeight.value) onPress();
-          }}>
-          <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
+        ref={itemRef}
+        style={[styles.container, { zIndex: expanded ? 2 : 1 }, rootAnimatedStyle]}
+        onLayout={({
+          nativeEvent: {
+            layout: { height },
+          },
+        }) => {
+          if (!collapsedHeight.value && height) {
+            collapsedHeight.value = height;
+          }
+        }}>
+        {expanded && <View style={{ height: collapsedHeight.value }} />}
 
-          <View style={styles.priceContainer}>
-            <View>
-              <Text style={styles.price}>${original_price.toFixed(2)}</Text>
-              <View style={styles.line} />
+        <Animated.View
+          style={[
+            styles.touchableContainer,
+            { position: expanded ? 'absolute' : 'relative' },
+            touchableContainerAnimatedStyle,
+          ]}>
+          <Animated.View style={headerPlaceholderStyle} />
+          <TouchableOpacity
+            style={styles.touchable}
+            activeOpacity={0.9}
+            disabled={expanded}
+            onPress={() => {
+              if (collapsedHeight.value) onPress();
+            }}>
+            <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
+
+            <View style={styles.priceContainer}>
+              <View>
+                <Text style={styles.price}>${original_price.toFixed(2)}</Text>
+                <View style={styles.line} />
+              </View>
             </View>
-          </View>
 
-          {expanded && <TouchableOpacity style={styles.close} onPress={onPress}></TouchableOpacity>}
+            {expanded && (
+              <TouchableOpacity style={styles.close} onPress={onPress}></TouchableOpacity>
+            )}
 
-          <View style={styles.content}>
-            <View style={[styles.rowContainer, { marginBottom: 12 }]}>
-              <Text style={styles.title}>{title}</Text>
+            <View style={styles.content}>
+              <View style={[styles.rowContainer, { marginBottom: 12 }]}>
+                <Text style={styles.title}>{title}</Text>
+              </View>
+              <View style={styles.rowContainer}>
+                <View>{/* Add store here */}</View>
+                <Text style={{ color: daysLeft > 3 ? Colors.safe : Colors.unsafe }}>
+                  {daysLeft} days left
+                </Text>
+              </View>
             </View>
-            <View style={styles.rowContainer}>
-              <View>{/* Add store here */}</View>
-              <Text style={{ color: daysLeft > 3 ? Colors.safe : Colors.unsafe }}>
-                {daysLeft} days left
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-        {/* Everything below will be hidden */}
-        {expanded && (
-          <Animated.View style={opacityAnimationStyle}>
-            <Text style={styles.sectionTitle}>Description</Text>
-            <Text style={styles.description}>{description}</Text>
-            <Text style={styles.sectionTitle}>Additional Info</Text>
-            <InfoItem label='Release Date' value={release_date} />
-            <InfoItem label='Developer' value={developer} />
-            <InfoItem label='Platforms' value='Windows' />
-          </Animated.View>
-        )}
+          {/* Everything below will be hidden */}
+          {expanded && (
+            <Animated.View style={[styles.additionalInfo, opacityAnimationStyle]}>
+              <Text style={styles.sectionTitle}>Description</Text>
+              <Text style={styles.description}>{description}</Text>
+              <Text style={styles.sectionTitle}>Additional Info</Text>
+              <InfoItem label='Release Date' value={release_date} />
+              <InfoItem label='Developer' value={developer} />
+              <InfoItem label='Platforms' value='Windows' />
+            </Animated.View>
+          )}
+        </Animated.View>
       </Animated.View>
-    </Animated.View>
+    </>
   );
 }
