@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Animated, {
+  interpolate,
   measure,
   runOnUI,
   useAnimatedRef,
@@ -17,16 +18,17 @@ import useEffectAfter from 'utils/hooks/useEffectAfter';
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
     borderRadius: 12,
     marginBottom: 12,
+  },
+  touchableContainer: {
+    borderRadius: 12,
+    backgroundColor: Colors.itemBackground,
   },
   touchable: {
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 16,
-    borderRadius: 12,
-    backgroundColor: Colors.itemBackground,
   },
   image: {
     borderRadius: 12,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const statusBarHeight = getStatusBarHeight();
+const statusBarHeight = getStatusBarHeight() + 10;
 
 function InfoItem({ label, value, renderValue }) {
   return (
@@ -120,25 +122,29 @@ export default function Game({
 }) {
   const itemRef = useAnimatedRef();
   const collapsedHeight = useSharedValue(0);
-  const translateY = useSharedValue(0);
+  const reqTranslateY = useSharedValue(0);
+  const anim = useSharedValue(0);
 
   function expand() {
     'worklet';
     if (expanded) {
       const { pageY } = measure(itemRef);
-      translateY.value = withTiming(-1 * pageY + statusBarHeight);
+      reqTranslateY.value = -1 * pageY;
+      anim.value = withTiming(1);
     } else {
-      translateY.value = withTiming(0);
+      anim.value = withTiming(0);
     }
   }
 
   const rootAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: translateY.value }],
+      transform: [{ translateY: interpolate(anim.value, [0, 1], [0, reqTranslateY.value]) }],
     };
-  }, []);
+  });
 
-  const placeholderStyle = useAnimatedStyle(() => ({ height: collapsedHeight.value }));
+  const headerPlaceholderStyle = useAnimatedStyle(() => ({
+    height: interpolate(anim.value, [0, 1], [0, statusBarHeight]),
+  }));
 
   useEffectAfter(() => {
     runOnUI(expand)();
@@ -159,8 +165,14 @@ export default function Game({
           collapsedHeight.value = height;
         }
       }}>
-      {expanded && <Animated.View style={placeholderStyle} />}
-      <Animated.View style={[{ position: expanded ? 'absolute' : 'relative' }, rootAnimatedStyle]}>
+      {expanded && <View style={{ height: collapsedHeight.value }} />}
+      <Animated.View
+        style={[
+          styles.touchableContainer,
+          { position: expanded ? 'absolute' : 'relative' },
+          rootAnimatedStyle,
+        ]}>
+        <Animated.View style={headerPlaceholderStyle} />
         <Touchable
           style={styles.touchable}
           rippleColor={Colors.accent}

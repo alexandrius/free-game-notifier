@@ -28,6 +28,7 @@ export default function GameList({ navigation }) {
   return (
     <ScreenWrapper title='100% Discount'>
       <ScrollView
+        scrollEnabled={expanded < 0}
         style={StyleSheet.absoluteFill}
         contentContainerStyle={styles.contentContainerStyle}>
         {games?.map((game, index) => (
