@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 export default function GameList({ navigation }) {
   const [games, setGames] = useState();
   const [selectedStore, setSelectedStore] = useState(0);
-  const [expanded, setExpanded] = useState(0);
+  const [expanded, setExpanded] = useState();
 
   useEffect(() => {
     getGames().then(({ data }) => {

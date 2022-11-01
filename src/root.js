@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import GameList from './screens/Games/GameList';
+import GameList from './screens/Games';
 
 const Stack = createStackNavigator();
 
