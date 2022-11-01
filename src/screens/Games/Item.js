@@ -1,11 +1,12 @@
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
   measure,
+  runOnJS,
   runOnUI,
   useAnimatedRef,
   useAnimatedStyle,
@@ -118,21 +119,27 @@ export default function Game({
   description,
   developer,
   onPress,
-  expanded,
+  expanded: expandedProp,
 }) {
+  const [expanded, setExpanded] = useState(expandedProp);
+
   const itemRef = useAnimatedRef();
   const collapsedHeight = useSharedValue(0);
   const reqTranslateY = useSharedValue(0);
   const anim = useSharedValue(0);
 
-  function expand() {
+  function expand(expand) {
     'worklet';
-    if (expanded) {
+    if (expand) {
       const { pageY } = measure(itemRef);
       reqTranslateY.value = -1 * pageY;
       anim.value = withTiming(1);
     } else {
-      anim.value = withTiming(0);
+      anim.value = withTiming(0, {}, (ended) => {
+        if (ended) {
+          runOnJS(setExpanded)(false);
+        }
+      });
     }
   }
 
@@ -147,8 +154,9 @@ export default function Game({
   }));
 
   useEffectAfter(() => {
-    runOnUI(expand)();
-  }, [expanded]);
+    if (expandedProp) setExpanded(true);
+    runOnUI(expand)(expandedProp);
+  }, [expandedProp]);
 
   const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
 
