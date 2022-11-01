@@ -1,5 +1,5 @@
 import { Entypo } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Animated, { FadeIn, Layout } from 'react-native-reanimated';
 import { getBottomSpace } from 'rn-iphone-helper';

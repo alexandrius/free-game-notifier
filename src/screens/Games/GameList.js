@@ -1,6 +1,6 @@
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { getBottomSpace } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';

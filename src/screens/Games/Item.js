@@ -1,7 +1,7 @@
 import Text from 'components/Text';
 import { Touchable } from 'components/Touchable';
 import dayjs from 'dayjs';
-import React from 'react';
+import { useMemo } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Colors from 'styles/colors';
 
@@ -103,7 +103,7 @@ export default function Game({
   onPress,
   expanded,
 }) {
-  const daysLeft = dayjs(until_date).diff(dayjs(), 'd');
+  const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
 
   return (
     <Touchable style={styles.container} rippleColor={Colors.accent} onPress={onPress}>
