@@ -1,15 +1,17 @@
+import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
-import { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { getBottomSpace, getStatusBarHeight } from 'rn-iphone-helper';
+import { useEffect, useRef, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { getBottomSpace } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
 
-import GameItem from './Item';
+import Details from './Details';
+import Item from './Item';
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: 70 + getStatusBarHeight(),
+    paddingTop: 10,
     paddingBottom: 80 + getBottomSpace(),
   },
 });
@@ -17,6 +19,7 @@ const styles = StyleSheet.create({
 export default function GameList({ navigation }) {
   const [games, setGames] = useState();
   const [selectedStore, setSelectedStore] = useState(0);
+  const itemPageYRef = useRef(0);
   const [expanded, setExpanded] = useState(-1);
 
   useEffect(() => {
@@ -27,23 +30,29 @@ export default function GameList({ navigation }) {
 
   return (
     <ScreenWrapper title='100% Discount'>
-      <ScrollView
-        scrollEnabled={expanded < 0}
-        style={StyleSheet.absoluteFill}
-        contentContainerStyle={styles.contentContainerStyle}>
-        {games?.map((game, index) => (
-          <GameItem
-            {...game}
-            key={game.id.toString()}
-            expanded={index === expanded}
-            onPress={() => {
-              if (expanded === index) setExpanded(-1);
-              else setExpanded(index);
-            }}
-          />
-        ))}
-      </ScrollView>
-
+      <FlashList
+        contentContainerStyle={styles.contentContainerStyle}
+        estimatedItemSize={310}
+        data={games}
+        extraData={expanded}
+        renderItem={({ item, index }) => {
+          return (
+            <Item
+              {...item}
+              insideList
+              expanded={index === expanded}
+              onPress={({ pageY }) => {
+                itemPageYRef.current = pageY;
+                setExpanded(index);
+                setGames([...games]);
+              }}
+            />
+          );
+        }}
+      />
+      {expanded >= 0 && (
+        <Details pageYRef={itemPageYRef} game={games[expanded]} onClose={() => setExpanded(-1)} />
+      )}
       <FloatingSwitcher
         selected={selectedStore}
         onSelect={(selected) => setSelectedStore(selected)}
