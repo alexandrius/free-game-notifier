@@ -1,7 +1,8 @@
+import Image from 'components/Image';
 import Text from 'components/Text';
 import dayjs from 'dayjs';
 import { useMemo, useRef } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from 'styles/colors';
 
 const styles = StyleSheet.create({
