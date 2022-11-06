@@ -72,7 +72,7 @@ export default function Item({
   const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
 
   return (
-    <View ref={ref} style={{ opacity: expanded ? 0 : 1 }}>
+    <View ref={ref} style={{ opacity: expanded ? 0 : 1 }} collapsable={false}>
       <TouchableOpacity
         style={[styles.touchable, { marginHorizontal: insideList ? 20 : 0 }]}
         activeOpacity={0.9}

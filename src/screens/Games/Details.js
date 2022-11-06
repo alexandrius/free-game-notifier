@@ -6,7 +6,7 @@ import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
+  withSpring,
 } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 20 + getStatusBarHeight(),
+    left: 20,
     backgroundColor: 'red',
   },
   backgroundNode: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const statusBarHeight = getStatusBarHeight() + 10;
+const statusBarHeight = getStatusBarHeight();
 
 function InfoItem({ label, value, renderValue }) {
   return (
@@ -75,10 +76,11 @@ export default function Details({ onClose, pageYRef, game }) {
   const anim = useSharedValue(0);
 
   function expand(expand) {
+    const config = { mass: 1.5, damping: 15 };
     if (expand) {
-      anim.value = withTiming(1);
+      anim.value = withSpring(1, { ...config, stiffness: 102 });
     } else {
-      anim.value = withTiming(0, {}, (ended) => {
+      anim.value = withSpring(0, { ...config, stiffness: 120 }, (ended) => {
         if (ended) {
           runOnJS(onClose)();
         }
@@ -105,7 +107,9 @@ export default function Details({ onClose, pageYRef, game }) {
   const opacityAnimationStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
 
   return (
-    <Animated.View style={[StyleSheet.absoluteFill, rootAnimatedStyle]}>
+    <Animated.ScrollView
+      showsVerticalScrollIndicator={false}
+      style={[StyleSheet.absoluteFill, rootAnimatedStyle]}>
       <Animated.View style={[styles.backgroundNode, opacityAnimationStyle]} />
       <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
         <Animated.View style={headerPlaceholderStyle} />
@@ -120,8 +124,9 @@ export default function Details({ onClose, pageYRef, game }) {
           <InfoItem label='Platforms' value='Windows' />
         </Animated.View>
       </Animated.View>
-
-      <TouchableOpacity style={styles.close} onPress={() => expand(false)}></TouchableOpacity>
-    </Animated.View>
+      <Animated.View style={[styles.close, opacityAnimationStyle]}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => expand(false)}></TouchableOpacity>
+      </Animated.View>
+    </Animated.ScrollView>
   );
 }

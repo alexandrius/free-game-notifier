@@ -2,17 +2,21 @@ import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { getBottomSpace } from 'rn-iphone-helper';
+import { StyleSheet, View } from 'react-native';
+import { getBottomSpace, getStatusBarHeight } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
+import colors from 'styles/colors';
 
 import Details from './Details';
 import Item from './Item';
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: 10,
+    paddingTop: getStatusBarHeight() + 60,
     paddingBottom: 80 + getBottomSpace(),
+  },
+  list: {
+    backgroundColor: colors.background,
   },
 });
 
@@ -30,26 +34,28 @@ export default function GameList({ navigation }) {
 
   return (
     <ScreenWrapper title='100% Discount'>
-      <FlashList
-        contentContainerStyle={styles.contentContainerStyle}
-        estimatedItemSize={310}
-        data={games}
-        extraData={expanded}
-        renderItem={({ item, index }) => {
-          return (
-            <Item
-              {...item}
-              insideList
-              expanded={index === expanded}
-              onPress={({ pageY }) => {
-                itemPageYRef.current = pageY;
-                setExpanded(index);
-                setGames([...games]);
-              }}
-            />
-          );
-        }}
-      />
+      <View style={StyleSheet.absoluteFill}>
+        <FlashList
+          contentContainerStyle={styles.contentContainerStyle}
+          estimatedItemSize={310}
+          data={games}
+          extraData={expanded}
+          renderItem={({ item, index }) => {
+            return (
+              <Item
+                {...item}
+                insideList
+                expanded={index === expanded}
+                onPress={({ pageY }) => {
+                  itemPageYRef.current = pageY;
+                  setExpanded(index);
+                  setGames([...games]);
+                }}
+              />
+            );
+          }}
+        />
+      </View>
       {expanded >= 0 && (
         <Details pageYRef={itemPageYRef} game={games[expanded]} onClose={() => setExpanded(-1)} />
       )}
