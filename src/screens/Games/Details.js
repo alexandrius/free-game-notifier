@@ -1,6 +1,6 @@
 import Text from 'components/Text';
 import { useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Animated, {
   interpolate,
   runOnJS,
@@ -107,26 +107,28 @@ export default function Details({ onClose, pageYRef, game }) {
   const opacityAnimationStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
 
   return (
-    <Animated.ScrollView
-      showsVerticalScrollIndicator={false}
-      style={[StyleSheet.absoluteFill, rootAnimatedStyle]}>
+    <View style={StyleSheet.absoluteFill}>
       <Animated.View style={[styles.backgroundNode, opacityAnimationStyle]} />
-      <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
-        <Animated.View style={headerPlaceholderStyle} />
-        <Item {...game} />
+      <ScrollView>
+        <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
+          <Animated.View style={headerPlaceholderStyle} />
+          <Animated.View style={rootAnimatedStyle}>
+            <Item {...game} />
+          </Animated.View>
 
-        <Animated.View style={[styles.additionalInfo, opacityAnimationStyle]}>
-          <Text style={styles.sectionTitle}>Description</Text>
-          <Text style={styles.description}>{description}</Text>
-          <Text style={styles.sectionTitle}>Additional Info</Text>
-          <InfoItem label='Release Date' value={release_date} />
-          <InfoItem label='Developer' value={developer} />
-          <InfoItem label='Platforms' value='Windows' />
+          <Animated.View style={[styles.additionalInfo, opacityAnimationStyle]}>
+            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.sectionTitle}>Additional Info</Text>
+            <InfoItem label='Release Date' value={release_date} />
+            <InfoItem label='Developer' value={developer} />
+            <InfoItem label='Platforms' value='Windows' />
+          </Animated.View>
         </Animated.View>
-      </Animated.View>
-      <Animated.View style={[styles.close, opacityAnimationStyle]}>
-        <TouchableOpacity style={{ flex: 1 }} onPress={() => expand(false)}></TouchableOpacity>
-      </Animated.View>
-    </Animated.ScrollView>
+        <Animated.View style={[styles.close, opacityAnimationStyle]}>
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => expand(false)}></TouchableOpacity>
+        </Animated.View>
+      </ScrollView>
+    </View>
   );
 }

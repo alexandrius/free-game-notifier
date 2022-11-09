@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { getBottomSpace, getStatusBarHeight } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
-import colors from 'styles/colors';
 
 import Details from './Details';
 import Item from './Item';
@@ -14,9 +13,6 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     paddingTop: getStatusBarHeight() + 60,
     paddingBottom: 80 + getBottomSpace(),
-  },
-  list: {
-    backgroundColor: colors.background,
   },
 });
 
@@ -56,9 +52,7 @@ export default function GameList({ navigation }) {
           }}
         />
       </View>
-      {expanded >= 0 && (
-        <Details pageYRef={itemPageYRef} game={games[expanded]} onClose={() => setExpanded(-1)} />
-      )}
+
       <FloatingSwitcher
         selected={selectedStore}
         onSelect={(selected) => setSelectedStore(selected)}
@@ -70,6 +64,9 @@ export default function GameList({ navigation }) {
           { title: 'Nintendo eShop' },
         ]}
       />
+      {expanded >= 0 && (
+        <Details pageYRef={itemPageYRef} game={games[expanded]} onClose={() => setExpanded(-1)} />
+      )}
     </ScreenWrapper>
   );
 }
