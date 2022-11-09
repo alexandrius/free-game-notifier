@@ -92,7 +92,7 @@ export default function Details({ onClose, pageYRef, game }) {
     expand(true);
   }, []);
 
-  const rootAnimatedStyle = useAnimatedStyle(() => ({
+  const marginAnimatedStyle = useAnimatedStyle(() => ({
     marginHorizontal: interpolate(anim.value, [0, 1], [20, 0]),
   }));
 
@@ -112,7 +112,7 @@ export default function Details({ onClose, pageYRef, game }) {
       <ScrollView>
         <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
           <Animated.View style={headerPlaceholderStyle} />
-          <Animated.View style={rootAnimatedStyle}>
+          <Animated.View style={marginAnimatedStyle}>
             <Item {...game} />
           </Animated.View>
 

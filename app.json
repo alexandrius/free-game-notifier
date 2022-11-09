@@ -2,6 +2,7 @@
   "expo": {
     "name": "FreeGamesNotifier",
     "slug": "FreeGamesNotifier",
+    "jsEngine": "hermes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
