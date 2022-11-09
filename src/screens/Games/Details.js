@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
+import { fill } from 'styles/common';
 
 import Item from './Item';
 
@@ -126,7 +127,7 @@ export default function Details({ onClose, pageYRef, game }) {
           </Animated.View>
         </Animated.View>
         <Animated.View style={[styles.close, opacityAnimationStyle]}>
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => expand(false)}></TouchableOpacity>
+          <TouchableOpacity style={fill} onPress={() => expand(false)}></TouchableOpacity>
         </Animated.View>
       </ScrollView>
     </View>
