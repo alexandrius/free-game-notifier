@@ -6,6 +6,7 @@ import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
   runOnJS,
+  runOnUI,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -101,11 +102,11 @@ export default function Details({ onClose, pageYRef, game }) {
   const listContentOffsetY = useSharedValue(0);
 
   function expand(expand) {
+    'worklet';
     const config = { mass: 1.5, damping: 15 };
     if (expand) {
       anim.value = withSpring(1, { ...config, stiffness: 102 });
     } else {
-      // scrollRef.current.setNativeProps({ scrollEnabled: false });
       anim.value = withSpring(0, { ...config, stiffness: 120 }, (ended) => {
         if (ended) {
           runOnJS(onClose)();
@@ -115,7 +116,7 @@ export default function Details({ onClose, pageYRef, game }) {
   }
 
   useEffect(() => {
-    expand(true);
+    runOnUI(expand)(true);
   }, []);
 
   const touchableContainerAnimatedStyle = useAnimatedStyle(() => ({
@@ -149,23 +150,18 @@ export default function Details({ onClose, pageYRef, game }) {
   const panGesture = Gesture.Pan()
     .onChange((event) => {
       'worklet';
-      console.log('event.translationY', event.translationY);
+      console.log('event', event.velocityY, event.translationY);
       if (listContentOffsetY.value <= 0 && event.velocityY >= 0) {
         anim.value = interpolate(event.translationY, [0, 400], [1, 0]);
       }
     })
-    .onEnd(() => {
+    .onEnd((event) => {
       'worklet';
-      // runOnJS(expand)(true);
-      // if (!isRefreshing.value) {
-      //   if (loaderOffsetY.value >= refreshHeight && !isRefreshing.value) {
-      //     isRefreshing.value = true;
-      //     runOnJS(onRefresh)();
-      //   } else {
-      //     isLoaderActive.value = false;
-      //     loaderOffsetY.value = withTiming(0);
-      //   }
-      // }
+      if (event.velocityY > 100) {
+        expand(false);
+        return;
+      }
+      expand(anim.value > 0.5);
     });
 
   return (
@@ -206,7 +202,9 @@ export default function Details({ onClose, pageYRef, game }) {
             </Animated.View>
           </Animated.View>
           <Animated.View style={[styles.close, opacityAnimatedStyle]}>
-            <TouchableOpacity style={fill} onPress={() => expand(false)}></TouchableOpacity>
+            <TouchableOpacity
+              style={fill}
+              onPress={() => runOnUI(expand)(false)}></TouchableOpacity>
           </Animated.View>
         </Animated.View>
       </GestureDetector>
