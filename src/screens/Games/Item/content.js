@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'styles/colors';
 
+import Title from './title';
+
 export default function Content({ title, original_price, until_date }) {
   const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
   return (
@@ -15,9 +17,7 @@ export default function Content({ title, original_price, until_date }) {
       </View>
 
       <View style={styles.content}>
-        <View style={[styles.rowContainer, { marginBottom: 12 }]}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
+        <Title style={styles.title}>{title}</Title>
         <View style={styles.rowContainer}>
           <View>{/* Add store here */}</View>
           <Text style={{ color: daysLeft > 3 ? Colors.safe : Colors.unsafe }}>
@@ -38,10 +38,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
     marginTop: 15,
+    marginBottom: 12,
   },
   priceContainer: {
     position: 'absolute',
