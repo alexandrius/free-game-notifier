@@ -1,7 +1,7 @@
 import Image from 'components/Image';
 import Text from 'components/Text';
 import { useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
@@ -15,9 +15,10 @@ import { getStatusBarHeight } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 import { fill } from 'styles/common';
 
-import { imageStyle } from './Item';
-
-const { width } = Dimensions.get('window');
+import { imageStyle, rootStyle } from './Item';
+import Content, { contentStyle, titleStyle } from './Item/content';
+import Price from './Item/price';
+import Title from './Item/title';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
@@ -38,6 +39,11 @@ const styles = StyleSheet.create({
   },
   infoItem: {
     marginBottom: 20,
+  },
+  itemContainer: {
+    backgroundColor: Colors.itemBackground,
+    borderRadius: imageStyle.borderRadius,
+    paddingBottom: rootStyle.paddingBottom,
   },
   image: {
     height: '100%',
@@ -67,6 +73,11 @@ const styles = StyleSheet.create({
   backgroundNode: {
     ...StyleSheet.absoluteFill,
     backgroundColor: Colors.itemBackground,
+  },
+  titleContainer: {
+    position: 'absolute',
+    top: titleStyle.marginTop,
+    left: contentStyle.marginHorizontal,
   },
 });
 
@@ -111,13 +122,13 @@ export default function Details({ onClose, pageYRef, game }) {
     transform: [{ translateY: interpolate(anim.value, [0, 1], [reqTranslateY.value, 0]) }],
   }));
 
-  const imageAnimatedStyle = useAnimatedStyle(() => ({
-    width: interpolate(anim.value, [0, 1], [width - 60, width]),
-    transform: [
-      { translateX: interpolate(anim.value, [0, 1], [30, 0]) },
-      { translateY: interpolate(anim.value, [0, 1], [10, 0]) },
-    ],
+  const itemContainerStyle = useAnimatedStyle(() => ({
+    marginHorizontal: interpolate(anim.value, [0, 1], [20, 0]),
+    paddingHorizontal: interpolate(anim.value, [0, 1], [10, 0]),
+    paddingTop: interpolate(anim.value, [0, 1], [10, 0]),
+  }));
 
+  const imageAnimatedStyle = useAnimatedStyle(() => ({
     borderRadius: interpolate(anim.value, [0, 1], [12, 0]),
     height: interpolate(
       anim.value,
@@ -126,7 +137,10 @@ export default function Details({ onClose, pageYRef, game }) {
     ),
   }));
 
-  const opacityAnimationStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
+  const opacityAnimatedStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
+  const reverseOpacityAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(anim.value, [0, 1], [1, 0]),
+  }));
 
   const onScroll = useAnimatedGestureHandler(({ contentOffset: { y } }) => {
     listContentOffsetY.value = y;
@@ -156,19 +170,33 @@ export default function Details({ onClose, pageYRef, game }) {
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Animated.View style={[styles.backgroundNode, opacityAnimationStyle]} />
+      <Animated.View style={[styles.backgroundNode, opacityAnimatedStyle]} />
       <GestureDetector gesture={Gesture.Simultaneous(panGesture, Gesture.Native())}>
         <Animated.View onScroll={onScroll} ref={scrollRef}>
           <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
-            <View>
+            <Animated.View style={[styles.itemContainer, itemContainerStyle]}>
               <AnimatedImage
                 style={[styles.image, imageAnimatedStyle]}
                 source={{ uri: game.photo }}
                 resizeMode='cover'
               />
-            </View>
+              <Animated.View
+                style={[StyleSheet.absoluteFill, reverseOpacityAnimatedStyle]}
+                pointerEvents='none'>
+                <Price price={game.original_price} />
+              </Animated.View>
 
-            <Animated.View style={[styles.additionalInfo, opacityAnimationStyle]}>
+              <View>
+                <Animated.View style={reverseOpacityAnimatedStyle}>
+                  <Content {...game} />
+                </Animated.View>
+                <Animated.View style={[styles.titleContainer, opacityAnimatedStyle]}>
+                  <Title>{game.title}</Title>
+                </Animated.View>
+              </View>
+            </Animated.View>
+
+            <Animated.View style={[styles.additionalInfo, opacityAnimatedStyle]}>
               <Text style={styles.sectionTitle}>Description</Text>
               <Text style={styles.description}>{description}</Text>
               <Text style={styles.sectionTitle}>Additional Info</Text>
@@ -177,7 +205,7 @@ export default function Details({ onClose, pageYRef, game }) {
               <InfoItem label='Platforms' value='Windows' />
             </Animated.View>
           </Animated.View>
-          <Animated.View style={[styles.close, opacityAnimationStyle]}>
+          <Animated.View style={[styles.close, opacityAnimatedStyle]}>
             <TouchableOpacity style={fill} onPress={() => expand(false)}></TouchableOpacity>
           </Animated.View>
         </Animated.View>
