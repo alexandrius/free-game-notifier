@@ -1,5 +1,5 @@
 import { Entypo } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Animated, { FadeIn, Layout } from 'react-native-reanimated';
 import { getBottomSpace } from 'rn-iphone-helper';
@@ -21,13 +21,23 @@ function Option({ title, onPress, chevronVisible, selected }) {
   );
 }
 
-export default function FloatingSwitcher({ selected = 0, options, onSelect }) {
+export default function FloatingSwitcher({ selected = 0, options, onSelect, hidden }) {
   const [expanded, setExpanded] = useState(false);
+  const heightRef = useRef(0);
 
   return (
     <>
       {expanded && <View style={styles.outsideTouch} onTouchStart={() => setExpanded(false)} />}
-      <Animated.View style={styles.container} layout={Layout.duration(200)}>
+      <Animated.View
+        style={[styles.container, { bottom: hidden ? -heightRef.current : getBottomSpace() + 15 }]}
+        onLayout={({
+          nativeEvent: {
+            layout: { height },
+          },
+        }) => {
+          if (height && !heightRef.current) heightRef.current = height;
+        }}
+        layout={Layout.duration(200)}>
         <>
           {expanded ? (
             options.map((option, index) => (
@@ -61,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: getBottomSpace() + 15,
     backgroundColor: Colors.accent,
     borderRadius: 16,
     overflow: 'hidden',

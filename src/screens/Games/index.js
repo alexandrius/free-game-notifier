@@ -53,6 +53,7 @@ export default function GameList({ navigation }) {
       </View>
 
       <FloatingSwitcher
+        hidden={expanded >= 0}
         selected={selectedStore}
         onSelect={(selected) => setSelectedStore(selected)}
         options={[

@@ -150,7 +150,6 @@ export default function Details({ onClose, pageYRef, game }) {
   const panGesture = Gesture.Pan()
     .onChange((event) => {
       'worklet';
-      console.log('event', event.velocityY, event.translationY);
       if (listContentOffsetY.value <= 0 && event.velocityY >= 0) {
         anim.value = interpolate(event.translationY, [0, 400], [1, 0]);
       }
