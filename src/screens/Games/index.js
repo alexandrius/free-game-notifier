@@ -40,7 +40,6 @@ export default function GameList({ navigation }) {
             return (
               <Item
                 {...item}
-                insideList
                 expanded={index === expanded}
                 onPress={({ pageY }) => {
                   itemPageYRef.current = pageY;

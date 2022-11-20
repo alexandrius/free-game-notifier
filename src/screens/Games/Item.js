@@ -5,6 +5,12 @@ import { useMemo, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from 'styles/colors';
 
+export const imageStyle = {
+  borderRadius: 12,
+  width: '100%',
+  height: 210,
+};
+
 const styles = StyleSheet.create({
   touchable: {
     paddingHorizontal: 10,
@@ -13,11 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.itemBackground,
     borderRadius: 12,
     marginBottom: 12,
-  },
-  image: {
-    borderRadius: 12,
-    width: '100%',
-    height: 210,
+    marginHorizontal: 20,
   },
   content: {
     marginHorizontal: 6,
@@ -57,16 +59,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Item({
-  id,
-  title,
-  photo,
-  original_price,
-  until_date,
-  insideList,
-  expanded,
-  onPress,
-}) {
+export default function Item({ id, title, photo, original_price, until_date, expanded, onPress }) {
   const ref = useRef();
 
   const daysLeft = useMemo(() => dayjs(until_date).diff(dayjs(), 'd'), [until_date]);
@@ -74,15 +67,14 @@ export default function Item({
   return (
     <View ref={ref} style={{ opacity: expanded ? 0 : 1 }} collapsable={false}>
       <TouchableOpacity
-        style={[styles.touchable, { marginHorizontal: insideList ? 20 : 0 }]}
+        style={styles.touchable}
         activeOpacity={0.9}
-        disabled={!insideList}
         onPress={() => {
           ref.current.measure((x, y, width, height, pageX, pageY) => {
             onPress({ x, y, width, height, pageX, pageY });
           });
         }}>
-        <Image style={styles.image} source={{ uri: photo }} resizeMode='cover' />
+        <Image style={imageStyle} source={{ uri: photo }} resizeMode='cover' />
 
         <View style={styles.priceContainer}>
           <View>
