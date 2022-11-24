@@ -3801,6 +3801,13 @@ expo-dev-menu@2.0.2:
     expo-dev-menu-interface "1.0.0"
     semver "^7.3.5"
 
+expo-device@~5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/expo-device/-/expo-device-5.0.0.tgz#2039e01a9d8bc696c060771145b764758e3ed242"
+  integrity sha512-FWlbOUMzAjHojLER8fnS42vLT7aqZ7IoEY+nw/RqmW17SA3GE2lzcYxRYZs1vAIgDnLzcS5CQMp08Eu+EXih1g==
+  dependencies:
+    ua-parser-js "^0.7.19"
+
 expo-error-recovery@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz#3e3333e134c992c234539d3773fe78915c883755"
@@ -6907,10 +6914,9 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rn-iphone-helper@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/rn-iphone-helper/-/rn-iphone-helper-1.0.2.tgz#49701383b1500eabbe5a102bc35b8f02273a09d2"
-  integrity sha512-TYdLwscWkgm0QTm4EOOOdhWzqtRunTxaRU6jr21471fUtwQlGTf2EdI+QudRenvA0WBpwvXV5Cfh9uH9PBFKbw==
+rn-iphone-helper@4TWIGGERS/rn-iphone-helper#cb294f3df6c98736d6eefa8ea1649b4791faae5e:
+  version "2.0.0-alpha.1"
+  resolved "https://codeload.github.com/4TWIGGERS/rn-iphone-helper/tar.gz/cb294f3df6c98736d6eefa8ea1649b4791faae5e"
 
 run-parallel@^1.1.9:
   version "1.2.0"
@@ -7720,7 +7726,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-ua-parser-js@^0.7.30:
+ua-parser-js@^0.7.19, ua-parser-js@^0.7.30:
   version "0.7.32"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.32.tgz#cd8c639cdca949e30fa68c44b7813ef13e36d211"
   integrity sha512-f9BESNVhzlhEFf2CHMSj40NWOjYPl1YKYbrvIr/hFTDEmLq7SRbWvm7FcdcpCYT95zrOhC7gZSxjdnnTpBcwVw==
