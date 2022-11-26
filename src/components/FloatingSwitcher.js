@@ -2,7 +2,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Animated, { FadeIn, Layout } from 'react-native-reanimated';
-import { getBottomSpace } from 'rn-iphone-helper';
+import { getBottomInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 
 function Option({ title, onPress, chevronVisible, selected }) {
@@ -29,7 +29,7 @@ export default function FloatingSwitcher({ selected = 0, options, onSelect, hidd
     <>
       {expanded && <View style={styles.outsideTouch} onTouchStart={() => setExpanded(false)} />}
       <Animated.View
-        style={[styles.container, { bottom: hidden ? -heightRef.current : getBottomSpace() + 15 }]}
+        style={[styles.container, { bottom: hidden ? -heightRef.current : getBottomInset() + 15 }]}
         onLayout={({
           nativeEvent: {
             layout: { height },

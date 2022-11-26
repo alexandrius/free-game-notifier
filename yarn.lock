@@ -6914,10 +6914,9 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rn-iphone-helper@2.0.0-alpha.1:
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/rn-iphone-helper/-/rn-iphone-helper-2.0.0-alpha.1.tgz#aa3f13a4ae7897f6bb601311dce08ef2e09e0e6f"
-  integrity sha512-/77geN9eR+qzzncPOK4iShPcIDviLSHsMKTHeRg7kFgMZuCTXVVG5Y+8eyTHcGdcYbleUxiNqkTGFvEQ6Oxm6Q==
+rn-iphone-helper@4TWIGGERS/rn-iphone-helper#991bed56f77aa4adae5aa3213704afa4f5b5a75e:
+  version "2.0.0-alpha.3"
+  resolved "https://codeload.github.com/4TWIGGERS/rn-iphone-helper/tar.gz/991bed56f77aa4adae5aa3213704afa4f5b5a75e"
 
 run-parallel@^1.1.9:
   version "1.2.0"

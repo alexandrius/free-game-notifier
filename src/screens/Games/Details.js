@@ -12,7 +12,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { getStatusBarHeight } from 'rn-iphone-helper';
+import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 import { fill } from 'styles/common';
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     position: 'absolute',
-    top: 20 + getStatusBarHeight(),
+    top: 20 + getTopInset(),
     left: 20,
     backgroundColor: 'red',
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const statusBarHeight = getStatusBarHeight();
+const statusBarHeight = getTopInset();
 
 function InfoItem({ label, value, renderValue }) {
   return (

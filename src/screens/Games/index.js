@@ -3,7 +3,7 @@ import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { getBottomSpace, getStatusBarHeight } from 'rn-iphone-helper';
+import { getBottomInset, getTopInset } from 'rn-iphone-helper';
 import { getGames } from 'services/supabase';
 
 import Details from './Details';
@@ -11,8 +11,8 @@ import Item from './Item';
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: getStatusBarHeight() + 60,
-    paddingBottom: 80 + getBottomSpace(),
+    paddingTop: getTopInset() + 60,
+    paddingBottom: 80 + getBottomInset(),
   },
 });
 

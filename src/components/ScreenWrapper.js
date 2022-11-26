@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import { getStatusBarHeight } from 'rn-iphone-helper';
+import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 
 import Text from './Text';
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: getStatusBarHeight() + 10,
+    paddingTop: getTopInset() + 10,
   },
   header: {
     flexDirection: 'row',
