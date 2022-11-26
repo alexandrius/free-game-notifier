@@ -1,8 +1,9 @@
 import { AntDesign } from '@expo/vector-icons';
 import Image from 'components/Image';
 import Text from 'components/Text';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
@@ -130,8 +131,6 @@ export default function Details({ onClose, pageYRef, game }) {
 
   useEffect(() => {
     runOnUI(expand)(true);
-    StatusBar.setHidden(true, true);
-    return () => StatusBar.setHidden(false, true);
   }, []);
 
   const touchableContainerAnimatedStyle = useAnimatedStyle(() => ({
@@ -166,7 +165,7 @@ export default function Details({ onClose, pageYRef, game }) {
     .onChange(({ velocityY, translationY }) => {
       'worklet';
       if (collapseTriggered.value) return;
-      if (listContentOffsetY.value <= 0 && velocityY >= 0) {
+      if (velocityY >= 0) {
         translateAnim.value = interpolate(translationY, [0, 400], [1, 0]);
       }
       collapseTriggered.value = translateAnim.value < 0.5;
@@ -179,6 +178,7 @@ export default function Details({ onClose, pageYRef, game }) {
 
   return (
     <View style={StyleSheet.absoluteFill}>
+      <StatusBar hidden animated />
       <Animated.View style={[styles.backgroundNode, opacityAnimatedStyle]} />
       <GestureDetector gesture={Gesture.Simultaneous(panGesture, Gesture.Native())}>
         <Animated.View onScroll={onScroll} ref={scrollRef}>
