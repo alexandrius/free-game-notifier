@@ -15,7 +15,7 @@ export default function Price({ price }) {
 const styles = StyleSheet.create({
   root: {
     position: 'absolute',
-    right: 0,
+    right: -2,
     top: 36,
     paddingHorizontal: 20,
     paddingVertical: 8,

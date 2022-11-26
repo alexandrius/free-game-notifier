@@ -7,4 +7,5 @@ export default {
   text_description: '#C4CBD5',
   infoTitle: '#919AAB',
   infoValue: '#FFFFFF',
+  tag: '#758FB4',
 };

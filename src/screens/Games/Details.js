@@ -1,7 +1,8 @@
+import { AntDesign } from '@expo/vector-icons';
 import Image from 'components/Image';
 import Text from 'components/Text';
 import { useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
@@ -12,6 +13,7 @@ import Animated, {
   useSharedValue,
   Easing,
   withTiming,
+  withDecay,
 } from 'react-native-reanimated';
 import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
@@ -22,6 +24,7 @@ import Content, { contentStyle, titleStyle } from './Item/content';
 import Price from './Item/price';
 import Title from './Item/title';
 
+const { height } = Dimensions.get('screen');
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const styles = StyleSheet.create({
@@ -49,7 +52,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   image: {
-    height: '100%',
     width: '100%',
   },
   infoLabel: {
@@ -66,12 +68,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   close: {
-    height: 40,
-    width: 40,
     position: 'absolute',
-    top: 20 + getTopInset(),
-    left: 20,
-    backgroundColor: 'red',
+    top: getTopInset(true),
+    right: 20,
   },
   backgroundNode: {
     ...StyleSheet.absoluteFill,
@@ -101,14 +100,27 @@ export default function Details({ onClose, pageYRef, game }) {
   const scrollRef = useRef();
   const reqTranslateY = useSharedValue(pageYRef.current);
   const anim = useSharedValue(0);
+  const translateAnim = useSharedValue(0);
   const listContentOffsetY = useSharedValue(0);
+  const collapseTriggered = useSharedValue(false);
 
-  function expand(expand) {
+  function expand(expand, velocity) {
     'worklet';
+    const duration = reqTranslateY.value > height / 3 ? 700 : 500;
+
+    if (velocity) {
+      anim.value = withDecay({ velocity });
+      return;
+    }
+
     if (expand) {
-      anim.value = withTiming(1, { duration: 500, easing: Easing.elastic(1) });
+      const config = { duration, easing: Easing.elastic(0.8) };
+      translateAnim.value = withTiming(1, config);
+      anim.value = withTiming(1, config);
     } else {
-      anim.value = withTiming(0, { duration: 500, easing: Easing.elastic(1) }, (ended) => {
+      const config = { duration, easing: Easing.elastic(0.8) };
+      translateAnim.value = withTiming(0, config);
+      anim.value = withTiming(0, config, (ended) => {
         if (ended) {
           runOnJS(onClose)();
         }
@@ -118,10 +130,12 @@ export default function Details({ onClose, pageYRef, game }) {
 
   useEffect(() => {
     runOnUI(expand)(true);
+    StatusBar.setHidden(true, true);
+    return () => StatusBar.setHidden(false, true);
   }, []);
 
   const touchableContainerAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: interpolate(anim.value, [0, 1], [reqTranslateY.value, 0]) }],
+    transform: [{ translateY: interpolate(translateAnim.value, [0, 1], [reqTranslateY.value, 0]) }],
     borderRadius: interpolate(anim.value, [0, 1], [12, 0]),
   }));
 
@@ -133,9 +147,11 @@ export default function Details({ onClose, pageYRef, game }) {
     height: interpolate(
       anim.value,
       [0, 1],
-      [imageStyle.height, imageStyle.height + statusBarHeight]
+      [imageStyle.height, imageStyle.height + statusBarHeight + 150]
     ),
   }));
+
+  const translateOpcaityStyle = useAnimatedStyle(() => ({ opacity: translateAnim.value }));
 
   const opacityAnimatedStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
   const reverseOpacityAnimatedStyle = useAnimatedStyle(() => ({
@@ -147,19 +163,18 @@ export default function Details({ onClose, pageYRef, game }) {
   });
 
   const panGesture = Gesture.Pan()
-    .onChange((event) => {
+    .onChange(({ velocityY, translationY }) => {
       'worklet';
-      if (listContentOffsetY.value <= 0 && event.velocityY >= 0) {
-        anim.value = interpolate(event.translationY, [0, 400], [1, 0]);
+      if (collapseTriggered.value) return;
+      if (listContentOffsetY.value <= 0 && velocityY >= 0) {
+        translateAnim.value = interpolate(translationY, [0, 400], [1, 0]);
       }
+      collapseTriggered.value = translateAnim.value < 0.5;
+      if (collapseTriggered.value) expand(!collapseTriggered.value);
     })
-    .onEnd((event) => {
+    .onEnd(() => {
       'worklet';
-      if (event.velocityY > 100) {
-        expand(false);
-        return;
-      }
-      expand(anim.value > 0.5);
+      if (!collapseTriggered.value) expand(true);
     });
 
   return (
@@ -188,6 +203,12 @@ export default function Details({ onClose, pageYRef, game }) {
                   <Title>{game.title}</Title>
                 </Animated.View>
               </View>
+
+              <Animated.View style={[styles.close, translateOpcaityStyle]}>
+                <TouchableOpacity style={fill} onPress={() => runOnUI(expand)(false)}>
+                  <AntDesign name='closecircle' size={24} color={Colors.tag} />
+                </TouchableOpacity>
+              </Animated.View>
             </Animated.View>
 
             <Animated.View style={[styles.additionalInfo, opacityAnimatedStyle]}>
@@ -198,11 +219,6 @@ export default function Details({ onClose, pageYRef, game }) {
               <InfoItem label='Developer' value={developer} />
               <InfoItem label='Platforms' value='Windows' />
             </Animated.View>
-          </Animated.View>
-          <Animated.View style={[styles.close, opacityAnimatedStyle]}>
-            <TouchableOpacity
-              style={fill}
-              onPress={() => runOnUI(expand)(false)}></TouchableOpacity>
           </Animated.View>
         </Animated.View>
       </GestureDetector>
