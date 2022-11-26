@@ -10,7 +10,8 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
+  Easing,
+  withTiming,
 } from 'react-native-reanimated';
 import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
@@ -43,8 +44,9 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: Colors.itemBackground,
-    borderRadius: imageStyle.borderRadius,
+    borderRadius: rootStyle.borderRadius,
     paddingBottom: rootStyle.paddingBottom,
+    overflow: 'hidden',
   },
   image: {
     height: '100%',
@@ -103,11 +105,10 @@ export default function Details({ onClose, pageYRef, game }) {
 
   function expand(expand) {
     'worklet';
-    const config = { mass: 1.5, damping: 15 };
     if (expand) {
-      anim.value = withSpring(1, { ...config, stiffness: 102 });
+      anim.value = withTiming(1, { duration: 500, easing: Easing.elastic(1) });
     } else {
-      anim.value = withSpring(0, { ...config, stiffness: 120 }, (ended) => {
+      anim.value = withTiming(0, { duration: 500, easing: Easing.elastic(1) }, (ended) => {
         if (ended) {
           runOnJS(onClose)();
         }
@@ -121,16 +122,14 @@ export default function Details({ onClose, pageYRef, game }) {
 
   const touchableContainerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: interpolate(anim.value, [0, 1], [reqTranslateY.value, 0]) }],
+    borderRadius: interpolate(anim.value, [0, 1], [12, 0]),
   }));
 
   const itemContainerStyle = useAnimatedStyle(() => ({
     marginHorizontal: interpolate(anim.value, [0, 1], [20, 0]),
-    paddingHorizontal: interpolate(anim.value, [0, 1], [10, 0]),
-    paddingTop: interpolate(anim.value, [0, 1], [10, 0]),
   }));
 
   const imageAnimatedStyle = useAnimatedStyle(() => ({
-    borderRadius: interpolate(anim.value, [0, 1], [12, 0]),
     height: interpolate(
       anim.value,
       [0, 1],

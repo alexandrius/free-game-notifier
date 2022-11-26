@@ -6,20 +6,17 @@ import Colors from 'styles/colors';
 import Content from './content';
 import Price from './price';
 
-export const imageStyle = {
-  borderRadius: 12,
-  width: '100%',
-  height: 210,
-};
-
 export const rootStyle = {
-  paddingHorizontal: 10,
-  paddingTop: 10,
   paddingBottom: 16,
   backgroundColor: Colors.itemBackground,
   borderRadius: 12,
   marginBottom: 12,
   marginHorizontal: 20,
+  overflow: 'hidden',
+};
+export const imageStyle = {
+  width: '100%',
+  height: 210,
 };
 
 export default function Item({ onPress, expanded, photo, original_price, ...game }) {
