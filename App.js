@@ -1,4 +1,3 @@
-import 'react-native-url-polyfill/auto';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
