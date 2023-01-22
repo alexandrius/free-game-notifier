@@ -1,5 +1,9 @@
-import { Image } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Image as RNImage } from 'react-native';
 import { isStandaloneBuild } from 'utils/quick';
 
-export default isStandaloneBuild() ? FastImage : Image;
+let ExpoImage;
+if (isStandaloneBuild()) {
+  ExpoImage = require('expo-image').Image;
+}
+
+export default ExpoImage || RNImage;
