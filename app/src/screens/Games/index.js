@@ -4,7 +4,6 @@ import ScreenWrapper from 'components/ScreenWrapper';
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { getBottomInset, getTopInset } from 'rn-iphone-helper';
-import { getGames } from 'services/supabase';
 
 import Details from './Details';
 import Item from './Item';
@@ -22,11 +21,7 @@ export default function GameList({ navigation }) {
   const itemPageYRef = useRef(0);
   const [expanded, setExpanded] = useState(-1);
 
-  useEffect(() => {
-    getGames().then(({ data }) => {
-      setGames(data);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <ScreenWrapper title='100% Discount'>

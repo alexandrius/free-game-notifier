@@ -1,6 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
-import Image from 'components/Image';
 import Text from 'components/Text';
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
