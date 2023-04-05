@@ -187,7 +187,7 @@ export default function Details({ onClose, pageYRef, game }) {
               <AnimatedImage
                 style={[styles.image, imageAnimatedStyle]}
                 source={{ uri: game.photo }}
-                resizeMode='cover'
+                contentFit='cover'
               />
               <Animated.View
                 style={[StyleSheet.absoluteFill, reverseOpacityAnimatedStyle]}

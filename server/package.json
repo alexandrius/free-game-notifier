@@ -1,0 +1,12 @@
+{
+  "name": "com.alexandrius.freegamesserver",
+  "module": "index.js",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "^0.5.0"
+  },
+  "dependencies": {
+    "hono": "^3.1.5",
+    "mongodb": "^5.2.0"
+  }
+}

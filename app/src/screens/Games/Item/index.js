@@ -32,7 +32,7 @@ export default function Item({ onPress, expanded, photo, original_price, ...game
             onPress({ x, y, width, height, pageX, pageY });
           });
         }}>
-        <Image style={imageStyle} source={{ uri: photo }} resizeMode='cover' />
+        <Image style={imageStyle} source={{ uri: photo }} contentFit='cover' />
         <Price price={original_price} />
         <Content {...game} />
       </TouchableOpacity>

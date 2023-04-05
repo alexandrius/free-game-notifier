@@ -2,7 +2,6 @@
   "expo": {
     "name": "FreeGamesNotifier",
     "slug": "FreeGamesNotifier",
-    "jsEngine": "hermes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,10 +17,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.alexandrius.freegames"
+      "bundleIdentifier": "com.alexandrius.freegamesapp"
     },
     "android": {
-      "package": "com.alexandrius.freegames",
+      "package": "com.alexandrius.freegamesapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

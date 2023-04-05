@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'styles/colors';
+import { formatPrice } from 'utils/quick';
 
 export default function Price({ price }) {
   return (
     <View style={styles.root}>
       <View>
-        <Text style={styles.price}>${price.toFixed(2)}</Text>
+        <Text style={styles.price}>{formatPrice(price)}</Text>
         <View style={styles.line} />
       </View>
     </View>

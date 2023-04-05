@@ -21,7 +21,15 @@ export default function GameList({ navigation }) {
   const itemPageYRef = useRef(0);
   const [expanded, setExpanded] = useState(-1);
 
-  useEffect(() => {}, []);
+  async function getGames() {
+    const resp = await fetch('http://localhost:3000/api/games');
+    const json = await resp.json();
+    setGames(json);
+  }
+
+  useEffect(() => {
+    getGames();
+  }, []);
 
   return (
     <ScreenWrapper title='100% Discount'>
