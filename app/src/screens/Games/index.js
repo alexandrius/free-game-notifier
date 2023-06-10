@@ -47,7 +47,6 @@ export default function GameList({ navigation }) {
                 onPress={({ pageY }) => {
                   itemPageYRef.current = pageY;
                   setExpanded(index);
-                  setGames([...games]);
                 }}
               />
             );

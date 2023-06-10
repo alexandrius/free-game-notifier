@@ -7,7 +7,7 @@ export default function Title({ style, children }) {
 const styles = StyleSheet.create({
   title: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
   },
 });

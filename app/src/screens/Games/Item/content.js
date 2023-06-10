@@ -11,7 +11,7 @@ export const titleStyle = {
 };
 
 export const contentStyle = {
-  marginHorizontal: 6,
+  marginHorizontal: 20,
 };
 
 export default function Content({ title, until_date }) {

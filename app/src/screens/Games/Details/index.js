@@ -20,10 +20,11 @@ import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 import { fill } from 'styles/common';
 
-import { imageStyle, rootStyle } from './Item';
-import Content, { contentStyle, titleStyle } from './Item/content';
-import Price from './Item/price';
-import Title from './Item/title';
+import { imageStyle, rootStyle } from '../Item';
+import Content, { contentStyle, titleStyle } from '../Item/content';
+import Price from '../Item/price';
+import Title from '../Item/title';
+import Tags from '../Tags';
 
 const { height } = Dimensions.get('screen');
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -96,7 +97,7 @@ function InfoItem({ label, value, renderValue }) {
 }
 
 export default function Details({ onClose, pageYRef, game }) {
-  const { release_date, description, developer } = game;
+  const { release_date, description, developer, tags } = game;
 
   const scrollRef = useRef();
   const reqTranslateY = useSharedValue(pageYRef.current);
@@ -150,7 +151,7 @@ export default function Details({ onClose, pageYRef, game }) {
     ),
   }));
 
-  const translateOpcaityStyle = useAnimatedStyle(() => ({ opacity: translateAnim.value }));
+  const translateOpacityStyle = useAnimatedStyle(() => ({ opacity: translateAnim.value }));
 
   const opacityAnimatedStyle = useAnimatedStyle(() => ({ opacity: anim.value }));
   const reverseOpacityAnimatedStyle = useAnimatedStyle(() => ({
@@ -204,7 +205,7 @@ export default function Details({ onClose, pageYRef, game }) {
                 </Animated.View>
               </View>
 
-              <Animated.View style={[styles.close, translateOpcaityStyle]}>
+              <Animated.View style={[styles.close, translateOpacityStyle]}>
                 <TouchableOpacity style={fill} onPress={() => runOnUI(expand)(false)}>
                   <AntDesign name='closecircle' size={24} color={Colors.tag} />
                 </TouchableOpacity>
@@ -212,6 +213,7 @@ export default function Details({ onClose, pageYRef, game }) {
             </Animated.View>
 
             <Animated.View style={[styles.additionalInfo, opacityAnimatedStyle]}>
+              <Tags tags={tags} />
               <Text style={styles.sectionTitle}>Description</Text>
               <Text style={styles.description}>{description}</Text>
               <Text style={styles.sectionTitle}>Additional Info</Text>
