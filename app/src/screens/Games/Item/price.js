@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'styles/colors';
-import { formatPrice } from 'utils/quick';
+import { formatPrice } from 'utils/bits';
 
 export default function Price({ price }) {
   return (

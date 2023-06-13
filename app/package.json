@@ -4,7 +4,6 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "dev-client": "expo start --dev-client",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -20,7 +19,6 @@
     "expo-device": "~5.2.1",
     "expo-file-system": "~15.2.2",
     "expo-image": "~1.0.1",
-    "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-better-touchable": "^0.0.9",

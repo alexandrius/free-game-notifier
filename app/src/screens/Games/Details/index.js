@@ -1,13 +1,13 @@
 import { AntDesign } from '@expo/vector-icons';
 import Text from 'components/Text';
 import { Image } from 'expo-image';
-import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, { runOnUI } from 'react-native-reanimated';
 import { getTopInset } from 'rn-iphone-helper';
 import Colors from 'styles/colors';
 import { fill } from 'styles/common';
+import { iOS } from 'utils/bits';
 
 import { rootStyle } from '../Item';
 import Content, { contentStyle, titleStyle } from '../Item/content';
@@ -103,7 +103,7 @@ export default function Details({ onClose, pageYRef, game }) {
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <StatusBar hidden animated />
+      {iOS && <StatusBar hidden animated />}
       <Animated.View style={[styles.backgroundNode, opacityAnimatedStyle]} />
       <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
         <GestureDetector gesture={Gesture.Simultaneous(panGesture, Gesture.Native())}>

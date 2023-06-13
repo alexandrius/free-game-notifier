@@ -1,8 +1,5 @@
 import Constants, { AppOwnership } from 'expo-constants';
-
-export function isStandaloneBuild() {
-  return Constants.appOwnership !== AppOwnership.Expo;
-}
+import { Platform } from 'react-native';
 
 // eslint-disable-next-line no-undef
 const formatter = new Intl.NumberFormat('en-US', {
@@ -13,3 +10,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 export function formatPrice(price) {
   return formatter.format(price / 100);
 }
+
+export const ExpoGo = Constants.appOwnership === AppOwnership.Expo;
+export const iOS = Platform.OS === 'ios';
+export const Android = Platform.OS === 'android';
