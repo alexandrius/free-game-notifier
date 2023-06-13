@@ -1,15 +1,16 @@
 import Text from 'components/Text';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 import Colors from 'styles/colors';
 
 export default function Tags({ tags }) {
   return (
     <View style={styles.root}>
       {tags.map((tag, i) => (
-        <View key={tag} style={styles.tag}>
+        <Animated.View key={tag} style={styles.tag} entering={ZoomIn.springify().delay(i * 100)}>
           <Text style={styles.tagText}>{tag}</Text>
-        </View>
+        </Animated.View>
       ))}
     </View>
   );
