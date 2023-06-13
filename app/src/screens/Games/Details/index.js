@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     color: Colors.infoValue,
   },
   additionalInfo: {
-    marginHorizontal: 24,
+    marginTop: -30,
+    marginHorizontal: 20,
   },
   close: {
     position: 'absolute',
@@ -88,14 +89,15 @@ export default function Details({ onClose, pageYRef, game }) {
 
   const {
     touchableContainerAnimatedStyle,
-    itemContainerStyle,
-    imageAnimatedStyle,
+    reverseOpacityAnimatedStyle,
     translateOpacityStyle,
     opacityAnimatedStyle,
-    reverseOpacityAnimatedStyle,
-    onScroll,
+    scrollAnimatedProps,
+    itemContainerStyle,
+    imageAnimatedStyle,
     panGesture,
     scrollRef,
+    onScroll,
     expand,
   } = useExpand({ onClose, pageYRef });
 
@@ -103,9 +105,13 @@ export default function Details({ onClose, pageYRef, game }) {
     <View style={StyleSheet.absoluteFill}>
       <StatusBar hidden animated />
       <Animated.View style={[styles.backgroundNode, opacityAnimatedStyle]} />
-      <GestureDetector gesture={Gesture.Simultaneous(panGesture, Gesture.Native())}>
-        <Animated.View onScroll={onScroll} ref={scrollRef}>
-          <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
+      <Animated.View style={[styles.touchableContainer, touchableContainerAnimatedStyle]}>
+        <GestureDetector gesture={Gesture.Simultaneous(panGesture, Gesture.Native())}>
+          <Animated.ScrollView
+            {...{ onScroll }}
+            ref={scrollRef}
+            scrollEventThrottle={16}
+            animatedProps={scrollAnimatedProps}>
             <Animated.View style={[styles.itemContainer, itemContainerStyle]}>
               <AnimatedImage
                 style={[styles.image, imageAnimatedStyle]}
@@ -143,9 +149,9 @@ export default function Details({ onClose, pageYRef, game }) {
               <InfoItem label='Developer' value={developer} />
               <InfoItem label='Platforms' value='Windows' />
             </Animated.View>
-          </Animated.View>
-        </Animated.View>
-      </GestureDetector>
+          </Animated.ScrollView>
+        </GestureDetector>
+      </Animated.View>
     </View>
   );
 }

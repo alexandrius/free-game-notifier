@@ -1,16 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
-import {
+import Animated, {
   interpolate,
   runOnJS,
   runOnUI,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   Easing,
   withTiming,
   withDecay,
+  useAnimatedProps,
+  useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import { getTopInset } from 'rn-iphone-helper';
 
@@ -19,6 +20,7 @@ import { imageStyle } from '../Item';
 const { height } = Dimensions.get('screen');
 
 const statusBarHeight = getTopInset();
+Animated.addWhitelistedNativeProps({ bounces: true });
 
 export default function useExpand({ pageYRef, onClose }) {
   const scrollRef = useRef();
@@ -26,6 +28,7 @@ export default function useExpand({ pageYRef, onClose }) {
   const anim = useSharedValue(0);
   const translateAnim = useSharedValue(0);
   const listContentOffsetY = useSharedValue(0);
+  const contentHeight = useSharedValue(0);
   const collapseTriggered = useSharedValue(false);
 
   function expand(expand, velocity) {
@@ -80,13 +83,23 @@ export default function useExpand({ pageYRef, onClose }) {
     opacity: interpolate(anim.value, [0, 1], [1, 0]),
   }));
 
-  const onScroll = useAnimatedGestureHandler(({ contentOffset: { y } }) => {
-    listContentOffsetY.value = y;
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: ({ contentOffset: { y } }) => {
+      if (y > 100) {
+        listContentOffsetY.value = y;
+      }
+    },
+    onMomentumEnd: ({ contentOffset: { y } }) => {
+      listContentOffsetY.value = y;
+    },
   });
+
+  const scrollAnimatedProps = useAnimatedProps(() => ({
+    bounces: listContentOffsetY.value > 0,
+  }));
 
   const panGesture = Gesture.Pan()
     .onChange(({ velocityY, translationY }) => {
-      'worklet';
       if (collapseTriggered.value) return;
       if (velocityY >= 0) {
         translateAnim.value = interpolate(translationY, [0, 400], [1, 0]);
@@ -95,20 +108,21 @@ export default function useExpand({ pageYRef, onClose }) {
       if (collapseTriggered.value) expand(!collapseTriggered.value);
     })
     .onEnd(() => {
-      'worklet';
       if (!collapseTriggered.value) expand(true);
     });
 
   return {
     touchableContainerAnimatedStyle,
-    itemContainerStyle,
-    imageAnimatedStyle,
+    reverseOpacityAnimatedStyle,
     translateOpacityStyle,
     opacityAnimatedStyle,
-    reverseOpacityAnimatedStyle,
-    onScroll,
+    scrollAnimatedProps,
+    itemContainerStyle,
+    imageAnimatedStyle,
+    contentHeight,
     panGesture,
     scrollRef,
+    onScroll,
     expand,
   };
 }

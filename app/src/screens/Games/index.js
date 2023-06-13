@@ -2,7 +2,7 @@ import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { getBottomInset, getTopInset } from 'rn-iphone-helper';
 
 import Details from './Details';
@@ -22,7 +22,12 @@ export default function GameList({ navigation }) {
   const [expanded, setExpanded] = useState(-1);
 
   async function getGames() {
-    const resp = await fetch('http://localhost:3000/api/games');
+    const resp = await fetch(
+      Platform.select({
+        ios: 'http://192.168.0.103:3000/api/games',
+        android: 'http://192.168.0.103:3000/api/games',
+      })
+    );
     const json = await resp.json();
     setGames(json);
   }
