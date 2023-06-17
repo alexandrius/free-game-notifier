@@ -1,10 +1,10 @@
 import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
-import { baseUrl } from 'env';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { getBottomInset, getTopInset } from 'rn-iphone-helper';
+import { useGet } from 'services/fetch/useFetch';
 
 import Details from './Details';
 import Item from './Item';
@@ -17,20 +17,11 @@ const styles = StyleSheet.create({
 });
 
 export default function GameList({ navigation }) {
-  const [games, setGames] = useState();
+  const { response: games } = useGet('/api/games');
+
   const [selectedStore, setSelectedStore] = useState(0);
   const itemPageYRef = useRef(0);
   const [expanded, setExpanded] = useState(-1);
-
-  async function getGames() {
-    const resp = await fetch(`${baseUrl}/api/games`); 
-    const json = await resp.json();
-    setGames(json);
-  }
-
-  useEffect(() => {
-    getGames();
-  }, []);
 
   return (
     <ScreenWrapper title='100% Discount'>
