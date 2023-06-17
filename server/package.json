@@ -6,7 +6,7 @@
     "start": "bun run index.js"
   },
   "devDependencies": {
-    "bun-types": "^0.6.8"
+    "bun-types": "^0.6.9"
   },
   "dependencies": {
     "hono": "^3.2.5",
