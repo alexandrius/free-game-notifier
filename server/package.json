@@ -15,9 +15,25 @@
     "mongodb": "^5.6.0"
   },
   "devDependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
     "esbuild": "^0.18.4",
-    "eslint": "^8.43.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true
+    },
+    "extends": [
+      "eslint-config-airbnb-base",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2022,
+      "sourceType": "module"
+    }
   }
 }
