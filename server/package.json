@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "deploy": "wrangler publish",
+    "deploy": "wrangler deploy",
     "start": "wrangler dev"
   },
   "dependencies": {
