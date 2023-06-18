@@ -1,12 +1,13 @@
 import { MongoClient } from "mongodb";
 import { Hono } from "hono";
+import { DB_URI } from "env";
 
-const mongoUrl = `mongodb://127.0.0.1:27017/?directConnection=true`;
+const mongoUrl = DB_URI;
 
 console.log(mongoUrl);
 const client = new MongoClient(mongoUrl);
 await client.connect();
-const db = client.db("FreeStuff");
+const db = client.db("FreeGameNotifier");
 const gameCollection = db.collection("Games");
 
 const app = new Hono();

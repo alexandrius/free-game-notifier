@@ -2,15 +2,22 @@
   "name": "com.alexandrius.freegamesserver",
   "module": "index.js",
   "type": "module",
+  "license": "MIT",
   "scripts": {
-    "start": "bun run index.js",
-    "watch": "bun --watch index.js"
-  },
-  "devDependencies": {
-    "bun-types": "^0.6.9"
+    "dev": "run-p dev:*",
+    "dev:wrangler": "wrangler pages dev dist --live-reload",
+    "dev:esbuild": "esbuild --bundle src/index.js --format=esm --watch --outfile=dist/_worker.js",
+    "build": "esbuild --bundle src/index.js --format=esm --outfile=dist/_worker.js",
+    "deploy": "wrangler pages publish dist"
   },
   "dependencies": {
     "hono": "^3.2.5",
     "mongodb": "^5.6.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.18.4",
+    "eslint": "^8.43.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8"
   }
 }
