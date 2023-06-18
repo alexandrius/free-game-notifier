@@ -21,8 +21,8 @@ app.use("*", async (c, next) => {
 app.get("/", (c) => c.text("Hello Bun!"));
 
 app.get("/api/games", async (c) => {
-  const result = await gameCollection.findOne({});
-  return c.json(result);
+  const { documents } = await gameCollection.find({});
+  return c.json(documents);
 });
 // app.get("/api/games/:id", (c) => {
 //   // console.log(c.req.param("id"));
