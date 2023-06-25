@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { basicAuth } from "hono/basic-auth";
+import { serveStatic } from "hono/cloudflare-workers";
 import { initCollection } from "mongo-http";
 
 let gameCollection;
@@ -27,12 +28,19 @@ app.use("*", async (c, next) => {
   await next();
 });
 
-app.get("/", (c) => c.text("Hello Bun!"));
+app.get("/", (c) => c.text("Hello Workers!"));
+
+
+// Serve react admin
+app.use("/assets/*", serveStatic({ root: "./" }));
+app.use("/vite.svg", serveStatic({ path: "./vite.svg" }));
+app.use("/admin", serveStatic({ path: "./" }));
 
 app.get("/api/games", async (c) => {
   const { documents } = await gameCollection.find({});
   return c.json(documents);
 });
+
 // app.get("/api/games/:id", (c) => {
 //   // console.log(c.req.param("id"));
 // });

@@ -9,6 +9,13 @@
   dependencies:
     mime "^3.0.0"
 
+"@cloudflare/kv-asset-handler@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.3.0.tgz#11f0af0749a400ddadcca16dcd6f4696d7036991"
+  integrity sha512-9CB/MKf/wdvbfkUdfrj+OkEwZ5b7rws0eogJ4293h+7b6KX5toPwym+VQKmILafNB9YiehqY0DlNrDcDhdWHSQ==
+  dependencies:
+    mime "^3.0.0"
+
 "@cloudflare/workerd-darwin-64@1.20230518.0":
   version "1.20230518.0"
   resolved "https://registry.yarnpkg.com/@cloudflare/workerd-darwin-64/-/workerd-darwin-64-1.20230518.0.tgz#d2c951670e11fa9263311dbb64d87c859cb88264"
