@@ -3,6 +3,7 @@
   "module": "index.js",
   "type": "module",
   "license": "MIT",
+  "version": "0.0.1",
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev"
