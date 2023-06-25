@@ -1,15 +1,24 @@
-import { initCollection } from "mongo-http";
 import { Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
+import { initCollection } from "mongo-http";
 
 let gameCollection;
 const app = new Hono();
+
+app.use(
+  "/admin/*",
+  async (c, next) =>
+    await basicAuth({
+      username: "alexandrius",
+      password: c.env.ADMIN_PASSWORD,
+    })(c, next)
+);
 
 app.use("*", async (c, next) => {
   if (!gameCollection) {
     gameCollection = initCollection({
       appId: "data-rutly",
       apiKey: c.env.MONGODB_API_KEY,
-      // TODO: Fix these vars
       databaseName: "FreeGameNotifier",
       dataSource: "FreeGamesNotifier",
       collectionName: "Games",
