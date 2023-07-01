@@ -14,7 +14,7 @@ module.exports = function (api) {
             styles: './src/styles',
             utils: './src/utils',
             assets: './assets',
-            env: './env',
+            env: '../env',
           },
         },
       ],

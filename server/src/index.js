@@ -1,10 +1,21 @@
 import { Hono } from "hono";
 import { basicAuth } from "hono/basic-auth";
 import { serveStatic } from "hono/cloudflare-workers";
+import { cors } from "hono/cors";
 import { initCollection } from "mongo-http";
+
+import { addTotalHeaders, fakeId } from "./utils";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+  "Access-Control-Max-Age": "86400",
+};
 
 let gameCollection;
 const app = new Hono();
+
+app.use("/api/*", cors(corsHeaders));
 
 app.use(
   "/admin/*",
@@ -30,14 +41,16 @@ app.use("*", async (c, next) => {
 
 app.get("/", (c) => c.text("Hello Workers!"));
 
-
 // Serve react admin
 app.use("/assets/*", serveStatic({ root: "./" }));
 app.use("/vite.svg", serveStatic({ path: "./vite.svg" }));
 app.use("/admin", serveStatic({ path: "./" }));
 
+// Api
 app.get("/api/games", async (c) => {
   const { documents } = await gameCollection.find({});
+  addTotalHeaders(c, documents);
+  fakeId(documents);
   return c.json(documents);
 });
 
