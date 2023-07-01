@@ -1,11 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fill } from 'styles/common';
+import { Android } from 'utils/bits';
 
 import Root from './src/root';
 
-if (Platform.OS === 'android') {
+if (Android) {
   StatusBar.setTranslucent(true);
   StatusBar.setBackgroundColor('transparent');
 }
