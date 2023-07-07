@@ -1,4 +1,4 @@
-import { baseUrl } from 'env';
+const baseUrl = 'https://freegames.s-pataridze.workers.dev';
 
 function handleResponse(response) {
   return response.text().then((text) => {
