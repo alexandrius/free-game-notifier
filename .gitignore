@@ -1,4 +1,4 @@
 .DS_Store
 .dev.vars
-server/admin/*
+server/admin
 env.js
