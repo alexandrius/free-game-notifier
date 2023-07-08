@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { FetchProvider } from 'fetch-yo-mama';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import FetchProvider from 'services/fetch/fetch-provider';
 import { fill } from 'styles/common';
 import { Android } from 'utils/bits';
 

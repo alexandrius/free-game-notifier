@@ -1,10 +1,10 @@
 import { FlashList } from '@shopify/flash-list';
 import FloatingSwitcher from 'components/FloatingSwitcher';
 import ScreenWrapper from 'components/ScreenWrapper';
+import { useGet } from 'fetch-yo-mama';
 import { useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { getBottomInset, getTopInset } from 'rn-iphone-helper';
-import { useGet } from 'services/fetch/useFetch';
 
 import Details from './Details';
 import Item from './Item';
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 export default function GameList({ navigation }) {
-  const { response: games } = useGet('/api/games');
+  const { response: games } = useGet('/api/games', { params: { traki: 'kie' } });
 
   const [selectedStore, setSelectedStore] = useState(0);
   const itemPageYRef = useRef(0);
