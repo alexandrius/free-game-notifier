@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import FetchProvider from 'services/fetch/fetch-provider';
 import { fill } from 'styles/common';
 import { Android } from 'utils/bits';
 
@@ -17,7 +18,10 @@ export default function App() {
   return (
     <GestureHandlerRootView style={fill}>
       <NavigationContainer>
-        <Root />
+        <FetchProvider
+          aliases={{ default: { baseUrl: 'https://freegames.s-pataridze.workers.dev' } }}>
+          <Root />
+        </FetchProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

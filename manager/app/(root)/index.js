@@ -1,10 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 
 export default function Root() {
+  
   return (
     <View style={styles.root}>
-      <Text>ADMIN WILL BE HERE</Text>
+      
     </View>
   );
 }

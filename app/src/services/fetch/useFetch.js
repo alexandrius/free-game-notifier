@@ -1,14 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useContext, useMemo } from 'react';
 
 import * as methods from './fetch';
+import FetchContext from './fetch-context';
 
-export default function useFetch({ endpoint, params, body, method, requestOnMount = true }) {
+export default function useFetch({
+  endpoint,
+  params,
+  body,
+  method,
+  fetchAlias = 'default',
+  requestOnMount = true,
+}) {
+  const aliases = useContext(FetchContext);
+  const url = useMemo(() => `${aliases[fetchAlias].baseUrl}${endpoint}`);
+
   // eslint-disable-next-line no-undef
   const abortController = useRef(new AbortController()).current;
 
   const request = useCallback(() => {
     const { signal } = abortController;
-    methods[method]({ endpoint, signal, params, body })
+    methods[method]({ url, signal, params, body })
       .then((response) => {
         setRequestState((state) => ({ ...requestState, loading: false, response }));
       })
@@ -35,18 +46,18 @@ export default function useFetch({ endpoint, params, body, method, requestOnMoun
   return requestState;
 }
 
-export function useGet(endpoint, params) {
-  return useFetch({ endpoint, ...params, method: 'get' });
+export function useGet(endpoint, params, fetchAlias) {
+  return useFetch({ endpoint, ...params, fetchAlias, method: 'get' });
 }
 
-export function usePost(endpoint, body, params) {
-  return useFetch({ endpoint, body, ...params, method: 'post' });
+export function usePost(endpoint, body, params, fetchAlias) {
+  return useFetch({ endpoint, body, ...params, fetchAlias, method: 'post' });
 }
 
-export function usePut(endpoint, body, params) {
-  return useFetch({ endpoint, body, ...params, method: 'put' });
+export function usePut(endpoint, body, params, fetchAlias) {
+  return useFetch({ endpoint, body, ...params, fetchAlias, method: 'put' });
 }
 
-export function useDelete(endpoint, params) {
-  return useFetch({ endpoint, ...params, method: 'del' });
+export function useDelete(endpoint, params, fetchAlias) {
+  return useFetch({ endpoint, ...params, fetchAlias, method: 'del' });
 }

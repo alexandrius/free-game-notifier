@@ -1,5 +1,3 @@
-const baseUrl = 'https://freegames.s-pataridze.workers.dev';
-
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
@@ -17,8 +15,8 @@ function handleError(error) {
   return Promise.reject(error);
 }
 
-function _fetch(endpoint, requestOptions) {
-  return fetch(`${baseUrl}${endpoint}`, requestOptions).then(handleResponse).catch(handleError);
+function _fetch(url, requestOptions) {
+  return fetch(url, requestOptions).then(handleResponse).catch(handleError);
 }
 
 function getEndpointWithParams(endpoint, params) {
@@ -32,40 +30,42 @@ function getEndpointWithParams(endpoint, params) {
   return endpointWithParams;
 }
 
-function get({ endpoint, params, signal }) {
+function get({ url, params, signal }) {
   const requestOptions = {
     method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
     signal,
   };
-  return _fetch(getEndpointWithParams(endpoint, params), requestOptions);
+  return _fetch(getEndpointWithParams(url, params), requestOptions);
 }
 
-function post({ endpoint, params, body, signal }) {
+function post({ url, params, body, signal }) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
     signal,
   };
-  return _fetch(getEndpointWithParams(endpoint, params), requestOptions);
+  return _fetch(getEndpointWithParams(url, params), requestOptions);
 }
 
-function put({ endpoint, params, body, signal }) {
+function put({ url, params, body, signal }) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
     signal,
   };
-  return _fetch(getEndpointWithParams(endpoint, params), requestOptions);
+  return _fetch(getEndpointWithParams(url, params), requestOptions);
 }
 
-function del({ endpoint, signal }) {
+function del({ url, params, signal }) {
   const requestOptions = {
     method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
     signal,
   };
-  return _fetch(endpoint, requestOptions);
+  return _fetch(getEndpointWithParams(url, params), requestOptions);
 }
 
 export { get, post, put, del };

@@ -5,7 +5,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "yarn --cwd ../admin build && wrangler deploy",
+    "deploy": "yarn --cwd ../manager build && wrangler deploy",
     "deployServer": "wrangler deploy",
     "start": "wrangler dev"
   },

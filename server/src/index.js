@@ -32,6 +32,7 @@ app.use("*", async (c, next) => {
       appId: "data-rutly",
       apiKey: c.env.MONGODB_API_KEY,
       databaseName: "FreeGamesNotifier",
+      dataSource: "FreeGamesNotifier",
       collectionName: "Games",
     });
   }
