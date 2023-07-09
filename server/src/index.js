@@ -43,7 +43,8 @@ app.get("/", (c) => c.text("Hello Workers!"));
 
 // Serve react admin
 app.use("/_expo/*", serveStatic({ root: "./" }));
-app.use("/admin", serveStatic({ path: "./" }));
+app.use("/admin", serveStatic({ path: "./admin" }));
+app.use("/admin/*", serveStatic({ path: "./admin" }));
 
 // Api
 app.get("/api/games", async (c) => {
