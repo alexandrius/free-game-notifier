@@ -1,12 +1,19 @@
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { Stack } from "expo-router";
+import { FetchProvider } from "fetch-yo-mama";
 
 export default function RootLayout() {
-  return <RootLayoutNav />;
+  return (
+    <FetchProvider
+      aliases={{
+        default: { baseUrl: "https://freegames.s-pataridze.workers.dev" },
+      }}
+    >
+      <RootLayoutNav />
+    </FetchProvider>
+  );
 }
 
 function RootLayoutNav() {
-  const temp = "";
   return (
     <Stack>
       <Stack.Screen name="(root)" options={{ headerShown: false }} />

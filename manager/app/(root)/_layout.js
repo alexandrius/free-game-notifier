@@ -1,5 +1,5 @@
 import { Slot } from "expo-router";
 
-export default function TabLayout() {
+export default () => {
   return <Slot />;
-}
+};
