@@ -54,6 +54,13 @@ app.get("/api/games", async (c) => {
   return c.json(documents);
 });
 
+app.post("/api/games", async (c) => {
+  const body = await c.req.json();
+
+  await gameCollection.insertOne(body);
+  return c.json({ success: true });
+});
+
 // app.get("/api/games/:id", (c) => {
 //   // console.log(c.req.param("id"));
 // });

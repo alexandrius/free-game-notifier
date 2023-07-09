@@ -19,7 +19,11 @@ export default function App() {
     <GestureHandlerRootView style={fill}>
       <NavigationContainer>
         <FetchProvider
-          aliases={{ default: { baseUrl: 'https://freegames.s-pataridze.workers.dev' } }}>
+          aliases={{
+            default: {
+              baseUrl: 'https://freegames.s-pataridze.workers.dev',
+            },
+          }}>
           <Root />
         </FetchProvider>
       </NavigationContainer>

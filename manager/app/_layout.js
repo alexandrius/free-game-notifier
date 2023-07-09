@@ -5,7 +5,12 @@ export default function RootLayout() {
   return (
     <FetchProvider
       aliases={{
-        default: { baseUrl: "https://freegames.s-pataridze.workers.dev" },
+        default: {
+          baseUrl: __DEV__
+            ? "http://127.0.0.1:8787"
+            : "https://freegames.s-pataridze.workers.dev",
+          headers: { "Content-Type": "application/json" },
+        },
       }}
     >
       <RootLayoutNav />
