@@ -42,8 +42,7 @@ app.use("*", async (c, next) => {
 app.get("/", (c) => c.text("Hello Workers!"));
 
 // Serve react admin
-app.use("/assets/*", serveStatic({ root: "./" }));
-app.use("/vite.svg", serveStatic({ path: "./vite.svg" }));
+app.use("/_expo/*", serveStatic({ root: "./" }));
 app.use("/admin", serveStatic({ path: "./" }));
 
 // Api

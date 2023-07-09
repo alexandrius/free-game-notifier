@@ -10,7 +10,7 @@ export default function Root() {
 
   return (
     <View style={styles.root}>
-      <Link href="/addgame">Add Game</Link>
+      <Link href="/admin/addgame">Add Game</Link>
       <GenericJsonTable data={games} />
     </View>
   );
