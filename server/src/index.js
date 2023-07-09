@@ -56,7 +56,6 @@ app.get("/api/games", async (c) => {
 
 app.post("/api/games", async (c) => {
   const body = await c.req.json();
-
   await gameCollection.insertOne(body);
   return c.json({ success: true });
 });

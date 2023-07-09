@@ -4040,10 +4040,10 @@ fetch-retry@^4.1.1:
   resolved "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-4.1.1.tgz#fafe0bb22b54f4d0a9c788dff6dd7f8673ca63f3"
   integrity sha512-e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA==
 
-fetch-yo-mama@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/fetch-yo-mama/-/fetch-yo-mama-0.0.7.tgz#e9f2e8ce35cd8ddb888ddf785d8e8fefd699f9da"
-  integrity sha512-tmIfdV/rAuTJwk6d1Yoc8Kr4Je+zsyiYPHkASBtYd1ConQhGgL2cRdVKVlWBe4MMznoFrPKc1WT1ApbVmUlPFA==
+fetch-yo-mama@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/fetch-yo-mama/-/fetch-yo-mama-0.0.8.tgz#33a56e1998768f91427bfe6c07eb7ed2be78d79f"
+  integrity sha512-9t9d8QRytvUDZ2X22Y7uV48kQnS3cZrUt8QSfZkU2iw+nA1cW8aN0Yx5TOImqYAC7fxTV//y2HnxbDsR2qzuSA==
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
