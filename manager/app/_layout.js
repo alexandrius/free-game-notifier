@@ -19,9 +19,5 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  return (
-    <Stack>
-      <Stack.Screen name="admin" options={{ headerShown: false }} />
-    </Stack>
-  );
+  return <Stack></Stack>;
 }
