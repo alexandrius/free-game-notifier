@@ -39,7 +39,7 @@ app.use("*", async (c, next) => {
   await next();
 });
 
-app.get("/", (c) => c.text("Hello Workers!"));
+app.get("/", (c) => c.text("FreeGameNotifier!"));
 
 // Serve react admin
 app.use("/_expo/*", serveStatic({ root: "./" }));
@@ -56,7 +56,8 @@ app.get("/api/games", async (c) => {
 
 app.post("/api/games", async (c) => {
   const body = await c.req.json();
-  await gameCollection.insertOne(body);
+  const res = await gameCollection.insertOne(body);
+  console.log("res", res);
   return c.json({ success: true });
 });
 

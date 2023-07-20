@@ -5,22 +5,23 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "yarn --cwd ../manager build && wrangler deploy",
+    "build:admin":"yarn --cwd ../manager build",
+    "deploy": "yarn build:admin && wrangler deploy",
     "deployServer": "wrangler deploy",
     "start": "wrangler dev"
   },
   "dependencies": {
-    "hono": "^3.2.7",
+    "hono": "^3.3.2",
     "mongo-http": "^0.0.19"
   },
   "devDependencies": {
     "@cloudflare/kv-asset-handler": "^0.3.0",
-    "@cloudflare/workers-types": "^4.20230518.0",
-    "esbuild": "^0.18.11",
-    "eslint": "^8.44.0",
-    "eslint-config-universe": "^11.2.0",
+    "@cloudflare/workers-types": "^4.20230717.0",
+    "esbuild": "^0.18.15",
+    "eslint": "^8.45.0",
+    "eslint-config-universe": "^11.3.0",
     "prettier": "^2.8.8",
     "typescript": "^5.1.6",
-    "wrangler": "^3.1.1"
+    "wrangler": "^3.3.0"
   }
 }
