@@ -4,13 +4,17 @@ A project which was planned to send push notifications whenever a paid game beco
 
 I will probably never finish the project so I'm open sourcing it as is.
 
-It includes:
+Monorepo includes:
 
 - `src/app` - The mobile appllication written with [Expo](https://expo.dev/)
 - `src/manager` - The admin console also written with [Expo](https://expo.dev/) and [Expo Router](https://docs.expo.dev/router/introduction/)
 - `src/server` - Running on [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ## App Preview
+
+https://github.com/alexandrius/free-game-notifier/assets/5978212/30a46caa-3260-495f-afa7-680707b25c49
+
+
 
 - Animations are implemented with Software Mansion [Reanimated 3](https://docs.swmansion.com/react-native-reanimated/).
 - Shared component animations are manually implemented since project, because then current version of Reanimated didn't support it.
