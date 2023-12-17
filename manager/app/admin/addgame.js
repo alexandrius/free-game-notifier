@@ -22,7 +22,7 @@ export default function AddGame() {
     "Craft",
   ]);
 
-  const { request, loading } = usePost("/api/games", {
+  const [requestState, addGame] = usePost("/api/games", {
     loadOnMount: false,
     body: {
       title,
@@ -44,7 +44,7 @@ export default function AddGame() {
   return (
     <View style={styles.root}>
       <Text>Add Game</Text>
-      {loading && <Text>Adding the game</Text>}
+      {requestState.loading && <Text>Adding the game</Text>}
       <TextInput placeholder="Title" value={title} onChangeText={setTitle} />
       <TextInput
         placeholder="Discount"
@@ -83,7 +83,7 @@ export default function AddGame() {
         value={originalPrice}
         onChangeText={setOriginalPrice}
       />
-      <Button title="Add Game" onPress={request} />
+      <Button title="Add Game" onPress={addGame} />
     </View>
   );
 }

@@ -1,6 +1,5 @@
-import { Image } from 'expo-image';
 import { useRef } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import Colors from 'styles/colors';
 
 import Content from './content';

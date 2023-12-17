@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
 });
 
 export default function GameList({ navigation }) {
-  const { response: games } = useGet('/api/games', { params: { traki: 'kie' } });
+  const [gamesFetch] = useGet('/api/games');
+
+  const games = gamesFetch.response;
 
   const [selectedStore, setSelectedStore] = useState(0);
   const itemPageYRef = useRef(0);

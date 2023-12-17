@@ -19,7 +19,6 @@
     "expo-constants": "~14.4.2",
     "expo-device": "~5.4.0",
     "expo-file-system": "~15.4.5",
-    "expo-image": "~1.3.5",
     "expo-updates": "~0.18.18",
     "fetch-yo-mama": "^0.1.14",
     "react": "18.2.0",

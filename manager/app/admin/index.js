@@ -6,12 +6,12 @@ import { View, StyleSheet } from "react-native";
 import GenericJsonTable from "@/components/GenericJsonTable";
 
 export default function Root() {
-  const { response: games } = useGet("/api/games");
+  const [requestState] = useGet("/api/games");
 
   return (
     <View style={styles.root}>
       <Link href="/admin/addgame">Add Game</Link>
-      <GenericJsonTable data={games} />
+      <GenericJsonTable data={requestState.response} />
     </View>
   );
 }

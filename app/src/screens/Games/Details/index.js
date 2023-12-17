@@ -1,7 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import Text from 'components/Text';
-import { Image } from 'expo-image';
-import { View, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, StatusBar, Image } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, { runOnUI } from 'react-native-reanimated';
 import { getTopInset } from 'rn-iphone-helper';
